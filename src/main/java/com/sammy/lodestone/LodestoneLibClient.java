@@ -7,7 +7,7 @@ import com.sammy.lodestone.handlers.RenderHandler;
 import com.sammy.lodestone.network.SyncWorldEventPacket;
 import com.sammy.lodestone.network.screenshake.PositionedScreenshakePacket;
 import com.sammy.lodestone.network.screenshake.ScreenshakePacket;
-import com.sammy.lodestone.setup.LodestoneRenderLayers;
+import com.sammy.lodestone.setup.LodestoneRenderLayerRegistry;
 import eu.midnightdust.lib.config.MidnightConfig;
 import net.fabricmc.fabric.api.client.rendering.v1.WorldRenderEvents;
 import net.minecraft.client.MinecraftClient;
@@ -25,7 +25,7 @@ public class LodestoneLibClient implements ClientModInitializer {
 	public void onInitializeClient(ModContainer mod) {
 		MidnightConfig.init(MODID, ClientConfig.class);
 
-		LodestoneRenderLayers.yea();
+		LodestoneRenderLayerRegistry.yea();
 		RenderHandler.init();
 		ParticleEmitterHandler.registerParticleEmitters();
 

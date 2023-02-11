@@ -4,7 +4,7 @@ import com.mojang.blaze3d.shader.FogShape;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.BufferBuilder;
 import com.sammy.lodestone.helpers.RenderHelper;
-import com.sammy.lodestone.setup.LodestoneRenderLayers;
+import com.sammy.lodestone.setup.LodestoneRenderLayerRegistry;
 import com.sammy.lodestone.systems.rendering.ExtendedShader;
 import com.sammy.lodestone.systems.rendering.ShaderUniformHandler;
 import net.minecraft.client.MinecraftClient;
@@ -86,8 +86,8 @@ public class RenderHandler {
 	}
 
 	public static void renderBufferedParticles(MatrixStack matrixStack) {
-		DELAYED_PARTICLE_RENDER.draw(LodestoneRenderLayers.TRANSPARENT_PARTICLE);
-		DELAYED_PARTICLE_RENDER.draw(LodestoneRenderLayers.ADDITIVE_PARTICLE);
+		DELAYED_PARTICLE_RENDER.draw(LodestoneRenderLayerRegistry.TRANSPARENT_PARTICLE);
+		DELAYED_PARTICLE_RENDER.draw(LodestoneRenderLayerRegistry.ADDITIVE_PARTICLE);
 		draw(DELAYED_PARTICLE_RENDER, PARTICLE_BUFFERS);
 	}
 

@@ -20,8 +20,8 @@ import java.util.function.Function;
 import static com.sammy.lodestone.LodestoneLib.MODID;
 
 
-public class LodestoneRenderLayers extends RenderPhase {
-	public LodestoneRenderLayers(String string, Runnable runnable, Runnable runnable2) {
+public class LodestoneRenderLayerRegistry extends RenderPhase {
+	public LodestoneRenderLayerRegistry(String string, Runnable runnable, Runnable runnable2) {
 		super(string, runnable, runnable2);
 	}
 
@@ -91,8 +91,6 @@ public class LodestoneRenderLayers extends RenderPhase {
 		RenderLayer type = RenderLayer.of(
 				name, format, mode, QuiltLoader.isModLoaded("sodium") ? 262144 : 256, false, false, RenderLayer.MultiPhaseParameters.builder()
 						.shader(shader)
-						.writeMaskState(new RenderPhase.WriteMaskState(true, true))
-						.lightmap(new RenderPhase.Lightmap(false))
 						.transparency(transparency)
 						.texture(texture)
 						.cull(new RenderPhase.Cull(true))
@@ -101,6 +99,16 @@ public class LodestoneRenderLayers extends RenderPhase {
 		RenderHandler.addRenderLayer(type);
 		return type;
 	}
+
+	/**
+	 * Creates a custom render type and creates a buffer builder for it.
+	 */
+	public static RenderLayer createGenericRenderLayer(String name, VertexFormat format, VertexFormat.DrawMode mode, RenderLayer.MultiPhaseParameters.Builder builder) {
+		RenderLayer type = RenderLayer.of(name, format, mode, 256, false, false, builder.build(true));
+		RenderHandler.addRenderLayer(type);
+		return type;
+	}
+
 
 	/**
 	 * Queues shader uniform changes for a render type. When we end batches in {@link RenderHandler}}, we do so one render type at a time.
@@ -116,22 +124,6 @@ public class LodestoneRenderLayers extends RenderPhase {
 	 */
 	public static RenderLayer copy(int index, RenderLayer type) {
 		return COPIES.computeIfAbsent(Pair.of(index, type), (p) -> GENERIC.apply(new RenderLayerData((RenderLayer.MultiPhase) type)));
-	}
-
-	/*
-	 * This needs to be rewritten, but I don't have the brainpower to do it rn
-	 * */
-	public static RenderLayer getOutlineTranslucent(Identifier texture, boolean cull) {
-		return RenderLayer.of(MODID + ":outline_translucent",
-				VertexFormats.POSITION_COLOR_TEXTURE_OVERLAY_LIGHT_NORMAL, VertexFormat.DrawMode.QUADS, QuiltLoader.isModLoaded("sodium") ? 262144 : 256, false, true, RenderLayer.MultiPhaseParameters.builder()
-						.shader(cull ? RenderPhase.ENTITY_TRANSLUCENT_CULL_SHADER : RenderPhase.ENTITY_TRANSLUCENT_SHADER)
-						.texture(new RenderPhase.Texture(texture, false, false))
-						.transparency(TRANSLUCENT_TRANSPARENCY)
-						.cull(cull ? RenderPhase.ENABLE_CULLING : RenderPhase.DISABLE_CULLING)
-						.lightmap(RenderPhase.ENABLE_LIGHTMAP)
-						.overlay(RenderPhase.ENABLE_OVERLAY_COLOR)
-						.writeMaskState(RenderPhase.COLOR_MASK)
-						.build(false));
 	}
 
 	/**

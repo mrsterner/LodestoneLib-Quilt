@@ -3,7 +3,7 @@ plugins {
 	id 'org.quiltmc.loom' version '0.12.+'
 }
 
-archivesBaseName = project.archives_base_name
+archivesBaseName = project.archives_base_name + project.minecraft_version
 version = project.version
 group = project.maven_group
 sourceCompatibility = 1.17 // java 17
@@ -101,7 +101,7 @@ publishing {
 	// select the repositories you want to publish to
 	repositories {
 		// uncomment to publish to the local maven
-		// mavenLocal()
+		mavenLocal()
 	}
 }
 wrapper {
