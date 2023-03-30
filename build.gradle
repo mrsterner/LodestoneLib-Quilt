@@ -1,5 +1,6 @@
 plugins {
 	id 'maven-publish'
+	id 'io.github.juuxel.loom-quiltflower' version '1.8.+'
 	id 'org.quiltmc.loom' version '0.12.+'
 }
 
@@ -30,7 +31,7 @@ repositories {
 dependencies {
 	minecraft "com.mojang:minecraft:${project.minecraft_version}"
 
-	mappings "org.quiltmc:quilt-mappings:1.19.3+build.1:intermediary-v2"
+	mappings "org.quiltmc:quilt-mappings:${minecraft_version}+build.${quilt_mappings}:intermediary-v2"
 
 	modImplementation "org.quiltmc:quilt-loader:${project.loader_version}"
 	modImplementation "org.quiltmc.quilted-fabric-api:quilted-fabric-api:${project.quilted_fabric_api_version}-${project.minecraft_version}"

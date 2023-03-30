@@ -17,7 +17,7 @@ abstract class LivingEntityMixin extends Entity {
 		super(variant, world);
 	}
 
-	@Inject(method = "createLivingAttributes", at = @At("RETURN"))
+	@Inject(method = "createAttributes", at = @At("RETURN"))
 	private static void lodestone$createLivingAttributesL(CallbackInfoReturnable<DefaultAttributeContainer.Builder> info) {
 		LodestoneAttributeRegistry.ATTRIBUTES.forEach((id, entityAttribute) -> info.getReturnValue().add(entityAttribute));
 	}
