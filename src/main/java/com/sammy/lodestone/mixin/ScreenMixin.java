@@ -10,8 +10,8 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(Screen.class)
 final class ScreenMixin {
-	@Inject(at = @At("HEAD"), method = "renderBackground(Lnet/minecraft/client/util/math/MatrixStack;I)V")
-	private void lodestone$beforeBackgroundParticle(MatrixStack pPoseStack, int pVOffset, CallbackInfo ci) {
+	@Inject(at = @At("HEAD"), method = "renderBackground")
+	private void lodestone$beforeBackgroundParticle(MatrixStack pPoseStack, CallbackInfo ci) {
 		ScreenParticleHandler.renderEarliestParticles();
 	}
 }
