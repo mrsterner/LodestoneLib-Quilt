@@ -10,6 +10,10 @@ public class VecHelper {
 	//TODO: re-implement all NECESSARY functions into the new vecHelper method and remove ones that are not required.
 	public static final Vec3d CENTER_OF_ORIGIN = new Vec3d(.5, .5, .5);
 
+	public static Vec3i offsetDir(Direction dir) {
+		return new Vec3i(dir.getStepX(), dir.getStepY(), dir.getStepZ());
+	}
+
 	/**
 	 * Converts a block position into a Vec3d entry.
 	 *

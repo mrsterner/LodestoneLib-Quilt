@@ -3,8 +3,10 @@ package com.sammy.lodestone.systems.rendering;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.*;
 import com.sammy.lodestone.helpers.RenderHelper;
+import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.render.GameRenderer;
 import net.minecraft.client.render.ShaderProgram;
+import net.minecraft.client.texture.Sprite;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.*;
@@ -185,7 +187,7 @@ public class VFXBuilders {
 
 		public ScreenVFXBuilder draw(MatrixStack stack) {
 			if (bufferbuilder.isBuilding()) {
-				bufferbuilder.end();
+				end();
 			}
 			begin();
 			blit(stack);
@@ -203,7 +205,8 @@ public class VFXBuilders {
 		}
 
 		public ScreenVFXBuilder end() {
-			BufferRenderer.drawWithShader(bufferbuilder.end());
+			BufferBuilder.RenderedBuffer renderedBuffer = bufferbuilder.end();
+			BufferRenderer.drawWithShader(renderedBuffer);
 			return this;
 		}
 
@@ -317,6 +320,10 @@ public class VFXBuilders {
 			return this;
 		}
 
+		public WorldVFXBuilder setUV(Sprite sprite) {
+			return setUV(sprite.getMinU(), sprite.getMinV(), sprite.getMaxU(), sprite.getMaxV());
+		}
+
 		public WorldVFXBuilder setUV(float u0, float v0, float u1, float v1) {
 			this.u0 = u0;
 			this.v0 = v0;
@@ -393,12 +400,28 @@ public class VFXBuilders {
 
 		public WorldVFXBuilder renderQuad(VertexConsumer vertexConsumer, MatrixStack stack, Vector3f[] positions) {
 			Matrix4f last = stack.peek().getModel();
-			stack.translate(xOffset, yOffset, zOffset);
 			supplier.placeVertex(vertexConsumer, last, positions[0].x(), positions[0].y(), positions[0].z(), u0, v1);
 			supplier.placeVertex(vertexConsumer, last, positions[1].x(), positions[1].y(), positions[1].z(), u1, v1);
 			supplier.placeVertex(vertexConsumer, last, positions[2].x(), positions[2].y(), positions[2].z(), u1, v0);
 			supplier.placeVertex(vertexConsumer, last, positions[3].x(), positions[3].y(), positions[3].z(), u0, v0);
-			stack.translate(-xOffset, -yOffset, -zOffset);
+			return this;
+		}
+
+		public WorldVFXBuilder renderBeam(VertexConsumer vertexConsumer, MatrixStack stack, Vec3d start, Vec3d end, float width) {
+			MinecraftClient minecraft = MinecraftClient.getInstance();
+			Matrix4f last = stack.peek().getModel();
+
+			Vec3d cameraPosition = minecraft.getBlockEntityRenderDispatcher().camera.getPos();
+			Vec3d delta = end.subtract(start);
+			Vec3d normal = start.subtract(cameraPosition).crossProduct(delta).normalize().multiply(width / 2f, width / 2f, width / 2f);
+
+			Vec3d[] positions = new Vec3d[]{start.subtract(normal), start.add(normal), end.add(normal), end.subtract(normal)};
+
+			supplier.placeVertex(vertexConsumer, last, (float) positions[0].x, (float) positions[0].y, (float) positions[0].z, u0, v1);
+			supplier.placeVertex(vertexConsumer, last, (float) positions[1].x, (float) positions[1].y, (float) positions[1].z, u1, v1);
+			supplier.placeVertex(vertexConsumer, last, (float) positions[2].x, (float) positions[2].y, (float) positions[2].z, u1, v0);
+			supplier.placeVertex(vertexConsumer, last, (float) positions[3].x, (float) positions[3].y, (float) positions[3].z, u0, v0);
+
 			return this;
 		}
 
@@ -427,13 +450,13 @@ public class VFXBuilders {
 					float textureV = v / endV * radius;
 					float textureUN = un / endU * radius;
 					float textureVN = vn / endV * radius;
-					RenderHelper.vertexPosColorUVLight(vertexConsumer, last, p0.x(), p0.y(), p0.z(), r, g, b, a, textureU, textureV, light);
-					RenderHelper.vertexPosColorUVLight(vertexConsumer, last, p2.x(), p2.y(), p2.z(), r, g, b, a, textureUN, textureV, light);
-					RenderHelper.vertexPosColorUVLight(vertexConsumer, last, p1.x(), p1.y(), p1.z(), r, g, b, a, textureU, textureVN, light);
+					supplier.placeVertex(vertexConsumer, last, p0.x(), p0.y(), p0.z(), textureU, textureV);
+					supplier.placeVertex(vertexConsumer, last, p2.x(), p2.y(), p2.z(), textureUN, textureV);
+					supplier.placeVertex(vertexConsumer, last, p1.x(), p1.y(), p1.z(), textureU, textureVN);
 
-					RenderHelper.vertexPosColorUVLight(vertexConsumer, last, p3.x(), p3.y(), p3.z(), r, g, b, a, textureUN, textureVN, light);
-					RenderHelper.vertexPosColorUVLight(vertexConsumer, last, p1.x(), p1.y(), p1.z(), r, g, b, a, textureU, textureVN, light);
-					RenderHelper.vertexPosColorUVLight(vertexConsumer, last, p2.x(), p2.y(), p2.z(), r, g, b, a, textureUN, textureV, light);
+					supplier.placeVertex(vertexConsumer, last, p3.x(), p3.y(), p3.z(), textureUN, textureVN);
+					supplier.placeVertex(vertexConsumer, last, p1.x(), p1.y(), p1.z(), textureU, textureVN);
+					supplier.placeVertex(vertexConsumer, last, p2.x(), p2.y(), p2.z(), textureUN, textureV);
 				}
 			}
 			return this;

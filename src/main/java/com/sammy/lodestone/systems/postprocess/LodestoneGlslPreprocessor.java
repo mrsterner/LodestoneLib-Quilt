@@ -20,29 +20,10 @@ public class LodestoneGlslPreprocessor extends GlslImportProcessor {
 		Identifier id= new Identifier(name);
 		Identifier id1 = new Identifier(id.getNamespace(), "shaders/include/" + id.getPath() + ".glsl");
 
+		var resource = MinecraftClient.getInstance().getResourceManager().getResource(id1).orElseThrow();
+
 		try {
-			InputStream resource1 = MinecraftClient.getInstance().getResourceManager().getResourceOrThrow(id1).open();
-
-			String s2;
-			try {
-				s2 = IOUtils.toString(resource1, StandardCharsets.UTF_8);
-			} catch (Throwable throwable1) {
-				if (resource1 != null) {
-					try {
-						resource1.close();
-					} catch (Throwable throwable) {
-						throwable1.addSuppressed(throwable);
-					}
-				}
-
-				throw throwable1;
-			}
-
-			if (resource1 != null) {
-				resource1.close();
-			}
-
-			return s2;
+			return IOUtils.toString(resource.open(), StandardCharsets.UTF_8);
 		} catch (IOException ioexception) {
 			LodestoneLib.LOGGER.error("Could not open GLSL import {}: {}", name, ioexception.getMessage());
 			return "#error " + ioexception.getMessage();
