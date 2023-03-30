@@ -26,27 +26,27 @@ public final class RenderHelper {
 	}
 
 	public static void vertexPos(VertexConsumer vertexConsumer, Matrix4f last, float x, float y, float z) {
-		vertexConsumer.m_rkxaaknb(last, x, y, z).next();
+		vertexConsumer.vertex(last, x, y, z).next();
 	}
 
 	public static void vertexPosUV(VertexConsumer vertexConsumer, Matrix4f last, float x, float y, float z, float u, float v) {
-		vertexConsumer.m_rkxaaknb(last, x, y, z).uv(u, v).next();
+		vertexConsumer.vertex(last, x, y, z).uv(u, v).next();
 	}
 
 	public static void vertexPosUVLight(VertexConsumer vertexConsumer, Matrix4f last, float x, float y, float z, float u, float v, int light) {
-		vertexConsumer.m_rkxaaknb(last, x, y, z).uv(u, v).light(light).next();
+		vertexConsumer.vertex(last, x, y, z).uv(u, v).light(light).next();
 	}
 
 	public static void vertexPosColor(VertexConsumer vertexConsumer, Matrix4f last, float x, float y, float z, float r, float g, float b, float a) {
-		vertexConsumer.m_rkxaaknb(last, x, y, z).color(r, g, b, a).next();
+		vertexConsumer.vertex(last, x, y, z).color(r, g, b, a).next();
 	}
 
 	public static void vertexPosColorUV(VertexConsumer vertexConsumer, Matrix4f last, float x, float y, float z, float r, float g, float b, float a, float u, float v) {
-		vertexConsumer.m_rkxaaknb(last, x, y, z).color(r, g, b, a).uv(u, v).next();
+		vertexConsumer.vertex(last, x, y, z).color(r, g, b, a).uv(u, v).next();
 	}
 
 	public static void vertexPosColorUVLight(VertexConsumer vertexConsumer, Matrix4f last, float x, float y, float z, float r, float g, float b, float a, float u, float v, int light) {
-		vertexConsumer.m_rkxaaknb(last, x, y, z).color(r, g, b, a).uv(u, v).light(light).next();
+		vertexConsumer.vertex(last, x, y, z).color(r, g, b, a).uv(u, v).light(light).next();
 	}
 
 	public static Vector3f parametricSphere(float u, float v, float r) {
@@ -85,7 +85,7 @@ public final class RenderHelper {
 		Matrix4f projMat = RenderSystem.getProjectionMatrix();
 
 		Vector3f localPos = new Vector3f(worldPos);
-		localPos.sub(MinecraftClient.getInstance().gameRenderer.getCamera().getPos().m_sruzucpd());
+		localPos.sub(MinecraftClient.getInstance().gameRenderer.getCamera().getPos().toVector3f());
 
 		Vector4f pos = new Vector4f();
 		pos.mul(viewMat);

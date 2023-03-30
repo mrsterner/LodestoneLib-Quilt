@@ -41,25 +41,25 @@ public class VFXBuilders {
 		BufferBuilder bufferbuilder = Tessellator.getInstance().getBufferBuilder();
 
 		public ScreenVFXBuilder setPosTexDefaultFormat() {
-			supplier = (b, l, x, y, u, v) -> b.m_rkxaaknb(l, x, y, this.zLevel).uv(u, v).next();
+			supplier = (b, l, x, y, u, v) -> b.vertex(l, x, y, this.zLevel).uv(u, v).next();
 			format = VertexFormats.POSITION_TEXTURE;
 			return this;
 		}
 
 		public ScreenVFXBuilder setPosColorDefaultFormat() {
-			supplier = (b, l, x, y, u, v) -> b.m_rkxaaknb(l, x, y, this.zLevel).color(this.r, this.g, this.b, this.a).next();
+			supplier = (b, l, x, y, u, v) -> b.vertex(l, x, y, this.zLevel).color(this.r, this.g, this.b, this.a).next();
 			format = VertexFormats.POSITION_COLOR;
 			return this;
 		}
 
 		public ScreenVFXBuilder setPosColorTexDefaultFormat() {
-			supplier = (b, l, x, y, u, v) -> b.m_rkxaaknb(l, x, y, this.zLevel).color(this.r, this.g, this.b, this.a).uv(u, v).next();
+			supplier = (b, l, x, y, u, v) -> b.vertex(l, x, y, this.zLevel).color(this.r, this.g, this.b, this.a).uv(u, v).next();
 			format = VertexFormats.POSITION_COLOR_TEXTURE;
 			return this;
 		}
 
 		public ScreenVFXBuilder setPosColorTexLightmapDefaultFormat() {
-			supplier = (b, l, x, y, u, v) -> b.m_rkxaaknb(l, x, y, this.zLevel).color(this.r, this.g, this.b, this.a).uv(u, v).light(this.light).next();
+			supplier = (b, l, x, y, u, v) -> b.vertex(l, x, y, this.zLevel).color(this.r, this.g, this.b, this.a).uv(u, v).light(this.light).next();
 			format = VertexFormats.POSITION_COLOR_TEXTURE_LIGHT;
 			return this;
 		}
@@ -233,7 +233,7 @@ public class VFXBuilders {
 				if (l == null)
 					c.vertex(x, y, z).color(this.r, this.g, this.b, this.a).next();
 				else
-					c.m_rkxaaknb(l, x, y, z).color(this.r, this.g, this.b, this.a).next();
+					c.vertex(l, x, y, z).color(this.r, this.g, this.b, this.a).next();
 			}).setFormat(VertexFormats.POSITION_COLOR);
 		}
 
@@ -242,7 +242,7 @@ public class VFXBuilders {
 				if (l == null)
 					c.vertex(x, y, z).color(this.r, this.g, this.b, this.a).light(this.light).next();
 				else
-					c.m_rkxaaknb(l, x, y, z).color(this.r, this.g, this.b, this.a).light(this.light).next();
+					c.vertex(l, x, y, z).color(this.r, this.g, this.b, this.a).light(this.light).next();
 
 			}).setFormat(VertexFormats.POSITION_COLOR_LIGHT);
 		}
@@ -252,7 +252,7 @@ public class VFXBuilders {
 				if (l == null)
 					c.vertex(x, y, z).uv(u, v).next();
 				else
-					c.m_rkxaaknb(l, x, y, z).uv(u, v).next();
+					c.vertex(l, x, y, z).uv(u, v).next();
 			}).setFormat(VertexFormats.POSITION_TEXTURE);
 		}
 
@@ -261,7 +261,7 @@ public class VFXBuilders {
 				if (l == null)
 					c.vertex(x, y, z).color(this.r, this.g, this.b, this.a).uv(u, v).next();
 				else
-					c.m_rkxaaknb(l, x, y, z).color(this.r, this.g, this.b, this.a).uv(u, v).next();
+					c.vertex(l, x, y, z).color(this.r, this.g, this.b, this.a).uv(u, v).next();
 			}).setFormat(VertexFormats.POSITION_COLOR_TEXTURE);
 		}
 
@@ -270,7 +270,7 @@ public class VFXBuilders {
 				if (l == null)
 					c.vertex(x, y, z).color(this.r, this.g, this.b, this.a).uv(u, v).light(this.light).next();
 				else
-					c.m_rkxaaknb(l, x, y, z).color(this.r, this.g, this.b, this.a).uv(u, v).light(this.light).next();
+					c.vertex(l, x, y, z).color(this.r, this.g, this.b, this.a).uv(u, v).light(this.light).next();
 			}).setFormat(VertexFormats.POSITION_COLOR_TEXTURE_LIGHT);
 		}
 

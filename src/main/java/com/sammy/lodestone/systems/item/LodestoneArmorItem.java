@@ -11,22 +11,25 @@ import net.minecraft.item.ArmorMaterial;
 public abstract class LodestoneArmorItem extends ArmorItem {
 	private Multimap<EntityAttribute, EntityAttributeModifier> attributes;
 
-	public LodestoneArmorItem(ArmorMaterial materialIn, EquipmentSlot slot, Settings builder) {
-		super(materialIn, slot, builder);
+	public LodestoneArmorItem(ArmorMaterial material, ArmorSlot slot, Settings settings) {
+		super(material, slot, settings);
 	}
 
-	public ImmutableMultimap.Builder<EntityAttribute, EntityAttributeModifier> createExtraAttributes(EquipmentSlot slot) {
+
+	public ImmutableMultimap.Builder<EntityAttribute, EntityAttributeModifier> createExtraAttributes(ArmorSlot slot) {
 		return new ImmutableMultimap.Builder<>();
 	}
+
+
 
 	@Override
 	public Multimap<EntityAttribute, EntityAttributeModifier> getAttributeModifiers(EquipmentSlot equipmentSlot) {
 		if (attributes == null) {
 			ImmutableMultimap.Builder<EntityAttribute, EntityAttributeModifier> attributeBuilder = new ImmutableMultimap.Builder<>();
 			attributeBuilder.putAll(attributeModifiers);
-			attributeBuilder.putAll(createExtraAttributes(slot).build());
+			attributeBuilder.putAll(createExtraAttributes(armorSlot).build());
 			attributes = attributeBuilder.build();
 		}
-		return equipmentSlot == this.slot ? this.attributes : ImmutableMultimap.of();
+		return equipmentSlot == this.armorSlot.getEquipmentSlot()? this.attributes : ImmutableMultimap.of();
 	}
 }
