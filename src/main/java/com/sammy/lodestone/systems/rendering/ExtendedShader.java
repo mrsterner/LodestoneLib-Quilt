@@ -35,6 +35,10 @@ public class ExtendedShader extends ShaderProgram {
 		return null;
 	}
 
+	public static String rewriteAsId(String input, String containedId) {
+		Identifier contained = new Identifier(containedId);
+		return contained.getNamespace() + Identifier.NAMESPACE_SEPARATOR + input.replace(containedId, contained.getPath());
+	}
 
 	@Override
 	public void addUniform(JsonElement pJson) throws ShaderParseException {
