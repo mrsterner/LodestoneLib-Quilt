@@ -11,7 +11,7 @@ public class VecHelper {
 	public static final Vec3d CENTER_OF_ORIGIN = new Vec3d(.5, .5, .5);
 
 	public static Vec3i offsetDir(Direction dir) {
-		return new Vec3i(dir.getStepX(), dir.getStepY(), dir.getStepZ());
+		return new Vec3i(dir.getOffsetX(), dir.getOffsetY(), dir.getOffsetZ());
 	}
 
 	/**
