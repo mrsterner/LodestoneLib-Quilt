@@ -1,6 +1,7 @@
 package com.sammy.lodestone.mixin;
 
 import com.sammy.lodestone.systems.rendering.ExtendedShader;
+import net.fabricmc.fabric.impl.client.rendering.FabricShaderProgram;
 import net.minecraft.client.render.ShaderProgram;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
@@ -17,7 +18,7 @@ abstract class ShaderProgramMixin {
 	private String modifyProgramId(String id) {
 		ShaderProgram program = ShaderProgram.class.cast(this);
 		if (program instanceof ExtendedShader) {
-			return ExtendedShader.rewriteAsId(id, name);
+			return FabricShaderProgram.rewriteAsId(id, name);
 		}
 
 		return id;
