@@ -4,9 +4,8 @@ import com.sammy.lodestone.helpers.DataHelper;
 import com.sammy.lodestone.systems.particle.type.LodestoneParticleType;
 import net.fabricmc.fabric.api.client.particle.v1.ParticleFactoryRegistry;
 import net.minecraft.particle.ParticleType;
-import net.minecraft.registry.Registries;
-import net.minecraft.registry.Registry;
 import net.minecraft.util.Identifier;
+import net.minecraft.util.registry.Registry;
 
 import java.util.function.BiConsumer;
 
@@ -18,7 +17,7 @@ public class LodestoneParticleRegistry {
 	public static final LodestoneParticleType STAR_PARTICLE = new LodestoneParticleType();
 
 	public static void init() {
-		initParticles(bind(Registries.PARTICLE_TYPE));
+		initParticles(bind(Registry.PARTICLE_TYPE));
 	}
 
 	public static void registerFactories() {

@@ -1,8 +1,8 @@
 package com.sammy.lodestone.mixin;
 
 import com.sammy.lodestone.forge.ChunkUnloadListeningBlockEntity;
-import net.minecraft.registry.Registry;
 import net.minecraft.util.math.ChunkPos;
+import net.minecraft.util.registry.Registry;
 import net.minecraft.world.HeightLimitView;
 import net.minecraft.world.biome.Biome;
 import net.minecraft.world.chunk.Chunk;

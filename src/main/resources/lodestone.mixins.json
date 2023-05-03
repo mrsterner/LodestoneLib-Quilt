@@ -23,7 +23,6 @@
     "MinecraftClientMixin",
     "ParticleManagerMixin",
     "ScreenMixin",
-    "ShaderProgramMixin",
     "WorldRendererMixin"
   ],
   "injectors": {

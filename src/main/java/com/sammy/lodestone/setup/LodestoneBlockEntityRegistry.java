@@ -8,9 +8,8 @@ import com.sammy.lodestone.systems.multiblock.MultiBlockComponentEntity;
 import net.minecraft.block.Block;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.entity.BlockEntityType;
-import net.minecraft.registry.Registries;
-import net.minecraft.registry.Registry;
 import net.minecraft.util.Identifier;
+import net.minecraft.util.registry.Registry;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -27,7 +26,7 @@ public class LodestoneBlockEntityRegistry {
 	public static final BlockEntityType<LodestoneSignBlockEntity> SIGN = register("sign", BlockEntityType.Builder.create(LodestoneSignBlockEntity::new, getBlocks(LodestoneStandingSignBlock.class, LodestoneWallSignBlock.class)).build(null));
 
 	public static Block[] getBlocks(Class<?>... blockClasses) {
-		Registry<Block> blocks = Registries.BLOCK;
+		Registry<Block> blocks = Registry.BLOCK;
 		ArrayList<Block> matchingBlocks = new ArrayList<>();
 		for (Block block : blocks) {
 			if (Arrays.stream(blockClasses).anyMatch(b -> b.isInstance(block))) {
@@ -38,7 +37,7 @@ public class LodestoneBlockEntityRegistry {
 	}
 
 	public static Block[] getBlocksExact(Class<?> clazz) {
-		Registry<Block> blocks = Registries.BLOCK;
+		Registry<Block> blocks = Registry.BLOCK;
 		ArrayList<Block> matchingBlocks = new ArrayList<>();
 		for (Block block : blocks) {
 			if (clazz.equals(block.getClass())) {
@@ -54,6 +53,6 @@ public class LodestoneBlockEntityRegistry {
 	}
 
 	public static void init() {
-		BLOCK_ENTITY_TYPES.forEach((id, entityType) -> Registry.register(Registries.BLOCK_ENTITY_TYPE, id, entityType));
+		BLOCK_ENTITY_TYPES.forEach((id, entityType) -> Registry.register(Registry.BLOCK_ENTITY_TYPE, id, entityType));
 	}
 }

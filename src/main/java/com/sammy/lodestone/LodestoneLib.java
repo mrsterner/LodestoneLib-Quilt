@@ -19,16 +19,15 @@ import net.minecraft.block.entity.BlockEntityTicker;
 import net.minecraft.block.entity.BlockEntityType;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.Item;
-import net.minecraft.registry.Registries;
-import net.minecraft.registry.Registry;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.Vec3f;
 import net.minecraft.util.random.RandomGenerator;
+import net.minecraft.util.registry.Registry;
 import net.minecraft.world.World;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.jetbrains.annotations.Nullable;
-import org.joml.Vector3f;
 import org.quiltmc.loader.api.ModContainer;
 import org.quiltmc.loader.api.QuiltLoader;
 import org.quiltmc.qsl.base.api.entrypoint.ModInitializer;
@@ -41,7 +40,7 @@ import java.awt.*;
 public class LodestoneLib implements ModInitializer {
 	public static final Logger LOGGER = LogManager.getLogger("LodestoneLib");
 	public static final String MODID = "lodestone";
-	public static final Vector3f VEC3F_ZERO = new Vector3f();
+	public static final Vec3f VEC3F_ZERO = new Vec3f();
 
 	public static final RandomGenerator RANDOM = RandomGenerator.createLegacy();
 
@@ -59,9 +58,9 @@ public class LodestoneLib implements ModInitializer {
 		LodestoneBlockEntityRegistry.init();
 
 		if(QuiltLoader.isDevelopmentEnvironment()){
-			Registry.register(Registries.BLOCK, new Identifier("lodestone", "test"), TEST);
-			Registry.register(Registries.ITEM, new Identifier("lodestone", "test_item"), TEST_ITEM);
-			Registry.register(Registries.BLOCK_ENTITY_TYPE, new Identifier("lodestone", "test_entity"), TEST_ENTITY);
+			Registry.register(Registry.BLOCK, new Identifier("lodestone", "test"), TEST);
+			Registry.register(Registry.ITEM, new Identifier("lodestone", "test_item"), TEST_ITEM);
+			Registry.register(Registry.BLOCK_ENTITY_TYPE, new Identifier("lodestone", "test_entity"), TEST_ENTITY);
 		}
 	}
 	public static Identifier id(String path) {

@@ -6,9 +6,6 @@ import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.render.*;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.util.math.*;
-import org.joml.Matrix4f;
-import org.joml.Vector3f;
-import org.joml.Vector4f;
 
 import java.util.Optional;
 import java.util.function.Supplier;
@@ -49,22 +46,22 @@ public final class RenderHelper {
 		vertexConsumer.vertex(last, x, y, z).color(r, g, b, a).uv(u, v).light(light).next();
 	}
 
-	public static Vector3f parametricSphere(float u, float v, float r) {
-		return new Vector3f(MathHelper.cos(u) * MathHelper.sin(v) * r, MathHelper.cos(v) * r, MathHelper.sin(u) * MathHelper.sin(v) * r);
+	public static Vec3f parametricSphere(float u, float v, float r) {
+		return new Vec3f(MathHelper.cos(u) * MathHelper.sin(v) * r, MathHelper.cos(v) * r, MathHelper.sin(u) * MathHelper.sin(v) * r);
 	}
 
 	public static Vec2f screenSpaceQuadOffsets(Vector4f start, Vector4f end, float width) {
-		float x = -start.x;
-		float y = -start.y;
-		if (Math.abs(start.z) > 0) {
-			float ratio = end.z / start.z;
-			x = end.x + x * ratio;
-			y = end.y + y * ratio;
-		} else if (Math.abs(end.z) <= 0) {
-			x += end.x;
-			y += end.y;
+		float x = -start.getX();
+		float y = -start.getY();
+		if (Math.abs(start.getZ()) > 0) {
+			float ratio = end.getZ() / start.getZ();
+			x = end.getX() + x * ratio;
+			y = end.getY() + y * ratio;
+		} else if (Math.abs(end.getZ()) <= 0) {
+			x += end.getX();
+			y += end.getY();
 		}
-		if (start.z > 0) {
+		if (start.getZ() > 0) {
 			x = -x;
 			y = -y;
 		}
@@ -77,21 +74,21 @@ public final class RenderHelper {
 	}
 
 	public static Vector4f midpoint(Vector4f a, Vector4f b) {
-		return new Vector4f((a.x + b.x) * 0.5F, (a.y + b.y) * 0.5F, (a.z + b.z) * 0.5F, (a.w + b.w) * 0.5F);
+		return new Vector4f((a.getX() + b.getX()) * 0.5F, (a.getY() + b.getY()) * 0.5F, (a.getZ() + b.getZ()) * 0.5F, (a.getW() + b.getW()) * 0.5F);
 	}
 
-	public static Vec2f worldPosToTexCoord(Vector3f worldPos, MatrixStack viewModelStack) {
+	public static Vec2f worldPosToTexCoord(Vec3f worldPos, MatrixStack viewModelStack) {
 		Matrix4f viewMat = viewModelStack.peek().getModel();
 		Matrix4f projMat = RenderSystem.getProjectionMatrix();
 
-		Vector3f localPos = new Vector3f(worldPos);
-		localPos.sub(MinecraftClient.getInstance().gameRenderer.getCamera().getPos().toVector3f());
+		Vec3f localPos = worldPos.copy();
+		localPos.subtract(new Vec3f(MinecraftClient.getInstance().gameRenderer.getCamera().getPos()));
 
 		Vector4f pos = new Vector4f();
-		pos.mul(viewMat);
-		pos.mul(projMat);
+		pos.transform(viewMat);
+		pos.transform(projMat);
 		pos.normalize();
 
-		return new Vec2f((pos.x+1F)/2F, (pos.y+1F)/2F);
+		return new Vec2f((pos.getX()+1F)/2F, (pos.getY()+1F)/2F);
 	}
 }

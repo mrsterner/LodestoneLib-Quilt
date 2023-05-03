@@ -23,7 +23,7 @@ public abstract class BlockEntityMixin implements BlockEntityExtensions, INBTSer
 	@Shadow
 	public abstract NbtCompound toIdentifiedLocatedNbt();
 
-	@Inject(at = @At("RETURN"), method = "writeIdentifyingLocatingData")
+	@Inject(at = @At("RETURN"), method = "writeIdentifyingData(Lnet/minecraft/nbt/NbtCompound;)V")
 	private void port_lib$saveMetadata(NbtCompound nbt, CallbackInfo ci) {
 		if (lodestone$extraData != null && !lodestone$extraData.isEmpty()) {
 			nbt.put("ForgeData", lodestone$extraData);

@@ -12,8 +12,8 @@ import eu.midnightdust.lib.config.MidnightConfig;
 import net.fabricmc.fabric.api.client.rendering.v1.WorldRenderEvents;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.util.math.MatrixStack;
+import net.minecraft.util.math.Matrix4f;
 import net.minecraft.util.math.Vec3d;
-import org.joml.Matrix4f;
 import org.quiltmc.loader.api.ModContainer;
 import org.quiltmc.qsl.base.api.entrypoint.client.ClientModInitializer;
 import org.quiltmc.qsl.networking.api.client.ClientPlayNetworking;
@@ -50,7 +50,7 @@ public class LodestoneLibClient implements ClientModInitializer {
 
 			RenderHandler.renderBufferedParticles(matrixStack);
 			if (RenderHandler.MATRIX4F != null) {
-				RenderSystem.getModelViewMatrix().set(RenderHandler.MATRIX4F);
+				RenderSystem.getModelViewMatrix().load(RenderHandler.MATRIX4F);
 			}
 			RenderHandler.renderBufferedBatches(matrixStack);
 			RenderHandler.endBufferedRendering(matrixStack);

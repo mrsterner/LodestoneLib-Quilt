@@ -8,6 +8,7 @@ import com.sammy.lodestone.systems.particle.world.GenericParticle;
 import com.sammy.lodestone.systems.particle.world.WorldParticleEffect;
 import net.minecraft.block.BlockState;
 import net.minecraft.client.particle.ParticleTextureSheet;
+import net.minecraft.client.util.math.Vector3d;
 import net.minecraft.particle.ParticleEffect;
 import net.minecraft.particle.ParticleType;
 import net.minecraft.util.math.BlockPos;
@@ -16,7 +17,6 @@ import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.shape.VoxelShape;
 import net.minecraft.util.shape.VoxelShapes;
 import net.minecraft.world.World;
-import org.joml.Vector3d;
 
 import java.util.ArrayList;
 import java.util.Collections;

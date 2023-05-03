@@ -5,7 +5,7 @@ import com.sammy.lodestone.systems.particle.screen.LodestoneScreenParticleTextur
 import com.sammy.lodestone.systems.particle.screen.base.ScreenParticle;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.registry.Registries;
+import net.minecraft.util.registry.Registry;
 import net.minecraft.world.World;
 
 import java.util.ArrayList;
@@ -16,7 +16,7 @@ public class ParticleEmitterHandler {
 	public static final Map<Item, ItemParticleSupplier> EMITTERS = new HashMap<>();
 
 	public static void registerParticleEmitters() {
-		DataHelper.takeAll(new ArrayList<>(Registries.ITEM.stream().toList()), i -> i instanceof ItemParticleSupplier).forEach(i -> {
+		DataHelper.takeAll(new ArrayList<>(Registry.ITEM.stream().toList()), i -> i instanceof ItemParticleSupplier).forEach(i -> {
 					ItemParticleSupplier emitter = (ItemParticleSupplier) i;
 					registerItemParticleEmitter(i, emitter);
 				}

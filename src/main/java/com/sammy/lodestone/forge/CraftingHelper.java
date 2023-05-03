@@ -7,9 +7,9 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.nbt.StringNbtReader;
-import net.minecraft.registry.Registries;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.JsonHelper;
+import net.minecraft.util.registry.Registry;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.Objects;
@@ -24,7 +24,7 @@ public class CraftingHelper {
     public static Item getItem(String itemName, boolean disallowsAirInRecipe) {
         Item item = tryGetItem(itemName, disallowsAirInRecipe);
         if (item == null) {
-            if (!Registries.ITEM.containsId(new Identifier(itemName)))
+            if (!Registry.ITEM.containsId(new Identifier(itemName)))
                 throw new JsonSyntaxException("Unknown item '" + itemName + "'");
             if (disallowsAirInRecipe && item == Items.AIR)
                 throw new JsonSyntaxException("Invalid item: " + itemName);
@@ -35,10 +35,10 @@ public class CraftingHelper {
     @Nullable
     public static Item tryGetItem(String itemName, boolean disallowsAirInRecipe) {
         Identifier itemKey = new Identifier(itemName);
-        if (!Registries.ITEM.containsId(itemKey))
+        if (!Registry.ITEM.containsId(itemKey))
             return null;
 
-        Item item = Registries.ITEM.get(itemKey);
+        Item item = Registry.ITEM.get(itemKey);
         if (disallowsAirInRecipe && item == Items.AIR)
             return null;
         return item;
