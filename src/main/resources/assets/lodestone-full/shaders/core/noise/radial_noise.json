@@ -4,8 +4,8 @@
     "srcrgb": "srcalpha",
     "dstrgb": "1-srcalpha"
   },
-  "vertex": "lodestone:generic",
-  "fragment": "lodestone:noise/radial_noise",
+  "vertex": "lodestone-full:generic",
+  "fragment": "lodestone-full:noise/radial_noise",
   "attributes": [
     "Position",
     "Color",

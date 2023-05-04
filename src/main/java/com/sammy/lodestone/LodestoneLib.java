@@ -38,8 +38,8 @@ import org.quiltmc.qsl.item.setting.api.QuiltItemSettings;
 import java.awt.*;
 
 public class LodestoneLib implements ModInitializer {
-	public static final Logger LOGGER = LogManager.getLogger("LodestoneLib");
-	public static final String MODID = "lodestone";
+	public static final Logger LOGGER = LogManager.getLogger("LodestoneLib-Full");
+	public static final String MODID = "lodestone-full";
 	public static final Vec3f VEC3F_ZERO = new Vec3f();
 
 	public static final RandomGenerator RANDOM = RandomGenerator.createLegacy();
@@ -58,9 +58,9 @@ public class LodestoneLib implements ModInitializer {
 		LodestoneBlockEntityRegistry.init();
 
 		if(QuiltLoader.isDevelopmentEnvironment()){
-			Registry.register(Registry.BLOCK, new Identifier("lodestone", "test"), TEST);
-			Registry.register(Registry.ITEM, new Identifier("lodestone", "test_item"), TEST_ITEM);
-			Registry.register(Registry.BLOCK_ENTITY_TYPE, new Identifier("lodestone", "test_entity"), TEST_ENTITY);
+			Registry.register(Registry.BLOCK, new Identifier("lodestone-full", "test"), TEST);
+			Registry.register(Registry.ITEM, new Identifier("lodestone-full", "test_item"), TEST_ITEM);
+			Registry.register(Registry.BLOCK_ENTITY_TYPE, new Identifier("lodestone-full", "test_entity"), TEST_ENTITY);
 		}
 	}
 	public static Identifier id(String path) {

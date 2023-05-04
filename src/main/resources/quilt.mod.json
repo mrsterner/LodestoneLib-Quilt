@@ -2,13 +2,14 @@
 	"schema_version": 1,
 	"quilt_loader": {
 		"group": "com.sammy.lodestone",
-		"id": "lodestone",
+		"id": "lodestone-full",
 		"version": "${version}",
 		"metadata": {
-			"name": "LodestoneLib",
+			"name": "LodestoneLib-Full",
 			"description": "Library for all of the Lodestone team's projects, now 10% more gay",
 			"contributors": {
 				"Sammy": "Author",
+				"MrSterner" : "Stout",
 				"Arathain": "Porter"
 			},
 			"contact": {
@@ -43,7 +44,7 @@
 	"access_widener": "lodestone.accesswidener",
 	"mixin": "lodestone.mixins.json",
 	"cardinal-components": [
-		"lodestone:world_event",
-		"lodestone:player"
+		"lodestone-full:world_event",
+		"lodestone-full:player"
 	]
 }
