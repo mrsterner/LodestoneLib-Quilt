@@ -7,7 +7,6 @@
     "BlockEntityMixin",
     "LivingEntityMixin",
     "ServerWorldMixin",
-    "WorldChunkMixin",
     "WorldMixin"
   ],
   "client": [

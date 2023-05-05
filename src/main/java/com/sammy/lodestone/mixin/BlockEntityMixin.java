@@ -1,6 +1,5 @@
 package com.sammy.lodestone.mixin;
 
-import com.sammy.lodestone.forge.BlockEntityExtensions;
 import com.sammy.lodestone.forge.INBTSerializableCompound;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;
@@ -13,7 +12,7 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(BlockEntity.class)
-public abstract class BlockEntityMixin implements BlockEntityExtensions, INBTSerializableCompound {
+public abstract class BlockEntityMixin implements INBTSerializableCompound {
 	@Unique
 	private NbtCompound lodestone$extraData = null;
 
@@ -39,10 +38,6 @@ public abstract class BlockEntityMixin implements BlockEntityExtensions, INBTSer
 		}
 	}
 
-	@Inject(method = "markRemoved", at = @At("TAIL"))
-	public void port_lib$invalidate(CallbackInfo ci) {
-		invalidateCaps();
-	}
 
 	@Override
 	public NbtCompound serializeNBT() {
@@ -52,14 +47,6 @@ public abstract class BlockEntityMixin implements BlockEntityExtensions, INBTSer
 	@Override
 	public void deserializeNBT(NbtCompound nbt) {
 		deserializeNBT(null, nbt);
-	}
-
-	@Override
-	public NbtCompound getExtraCustomData() {
-		if (lodestone$extraData == null) {
-			lodestone$extraData = new NbtCompound();
-		}
-		return lodestone$extraData;
 	}
 
 	public void deserializeNBT(BlockState state, NbtCompound nbt) {

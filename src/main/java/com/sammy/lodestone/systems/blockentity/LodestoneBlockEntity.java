@@ -1,6 +1,5 @@
 package com.sammy.lodestone.systems.blockentity;
 
-import com.sammy.lodestone.forge.BlockEntityExtensions;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;
@@ -18,7 +17,7 @@ import net.minecraft.world.BlockView;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
 
-public class LodestoneBlockEntity extends BlockEntity implements BlockEntityExtensions {
+public class LodestoneBlockEntity extends BlockEntity {
 	public boolean needsSync;
 
 	public LodestoneBlockEntity(BlockEntityType<?> type, BlockPos pos, BlockState state) {
