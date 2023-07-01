@@ -34,6 +34,6 @@ public class ParticleEmitterHandler {
 	}
 
 	public interface ItemParticleSupplier {
-		void spawnParticles(HashMap<LodestoneScreenParticleTextureSheet, ArrayList<ScreenParticle>> target, World world, float partialTick, ItemStack stack, float x, float y);
+		void spawnParticles(HashMap<LodestoneScreenParticleTextureSheet, ArrayList<ScreenParticle>> target, World world, float partialTick, ItemStack stack);
 	}
 }

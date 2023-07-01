@@ -30,14 +30,35 @@ public class LodestoneLibClient implements ClientModInitializer {
 		ParticleEmitterHandler.registerParticleEmitters();
 
 		WorldRenderEvents.AFTER_TRANSLUCENT.register(context -> {
+			//MatrixStack matrixStack = context.matrixStack();
+			//Vec3d cameraPos = context.camera().getPos();
+			//matrixStack.push();
+			//matrixStack.translate(-cameraPos.x, -cameraPos.y, -cameraPos.z);
+			RenderHandler.MATRIX4F = new Matrix4f(RenderSystem.getModelViewMatrix());
+			//matrixStack.pop();
+		});
+
+		WorldRenderEvents.LAST.register(context -> {
 			MatrixStack matrixStack = context.matrixStack();
-			Vec3d cameraPos = context.camera().getPos();
 			matrixStack.push();
-			matrixStack.translate(-cameraPos.x, -cameraPos.y, -cameraPos.z);
-			RenderHandler.MATRIX4F =  new Matrix4f(RenderSystem.getModelViewMatrix());
+			if (context.worldRenderer().transparencyShader != null) {
+				MinecraftClient.getInstance().getFramebuffer().beginWrite(false);
+			}
+			RenderHandler.beginBufferedRendering(matrixStack);
+
+			RenderHandler.renderBufferedParticles(matrixStack);
+			if (RenderHandler.MATRIX4F != null) {
+				RenderSystem.getModelViewMatrix().mul(RenderHandler.MATRIX4F);
+			}
+			RenderHandler.renderBufferedBatches(matrixStack);
+			RenderHandler.endBufferedRendering(matrixStack);
+			if (context.worldRenderer().transparencyShader != null) {
+				context.worldRenderer().getCloudsFramebuffer().beginWrite(false);
+			}
 			matrixStack.pop();
 		});
 
+		/*
 		WorldRenderEvents.LAST.register(context -> {
 			MatrixStack matrixStack = context.matrixStack();
 			Vec3d cameraPos = context.camera().getPos();
@@ -59,6 +80,8 @@ public class LodestoneLibClient implements ClientModInitializer {
 			}
 			matrixStack.pop();
 		});
+
+		 */
 
 
 

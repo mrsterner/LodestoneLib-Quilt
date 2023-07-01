@@ -71,7 +71,7 @@ public class ScreenParticleHandler {
 		});
 	}
 
-	public static void renderItemStackEarly(ItemStack stack, int x, int y) {
+	public static void renderItemStackEarly(ItemStack stack) {
 		if (!ClientConfig.ENABLE_SCREEN_PARTICLES) {
 			return;
 		}
@@ -85,7 +85,7 @@ public class ScreenParticleHandler {
 				if (emitter != null) {
 					HashMap<LodestoneScreenParticleTextureSheet, ArrayList<ScreenParticle>> target = ITEM_STACK_BOUND_PARTICLES.computeIfAbsent(Pair.of(renderingHotbar, stack), s -> new HashMap<>());
 					if (canSpawnParticles) {
-						emitter.spawnParticles(target, minecraft.world, MinecraftClient.getInstance().getTickDelta(), stack, x+8, y+8);
+						emitter.spawnParticles(target, minecraft.world, MinecraftClient.getInstance().getTickDelta(), stack);
 					}
 					cachedItemTarget = target;
 				}

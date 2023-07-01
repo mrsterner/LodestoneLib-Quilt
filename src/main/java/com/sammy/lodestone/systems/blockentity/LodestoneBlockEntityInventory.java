@@ -3,7 +3,6 @@ package com.sammy.lodestone.systems.blockentity;
 
 import com.sammy.lodestone.forge.*;
 import com.sammy.lodestone.helpers.VecHelper;
-import io.github.fabricators_of_create.porting_lib.util.LazyOptional;
 import net.minecraft.entity.ItemEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
@@ -25,7 +24,6 @@ public class LodestoneBlockEntityInventory extends ItemStackHandler {
 	public final int allowedItemSize;
 	public Predicate<ItemStack> inputPredicate;
 	public Predicate<ItemStack> outputPredicate;
-	public final LazyOptional<ItemHandler> inventoryOptional = LazyOptional.of(() -> this);
 
 	public ArrayList<ItemStack> nonEmptyItemStacks = new ArrayList<>();
 

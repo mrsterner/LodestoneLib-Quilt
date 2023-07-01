@@ -8,14 +8,13 @@ import com.sammy.lodestone.setup.LodestoneRenderLayerRegistry;
 import com.sammy.lodestone.systems.rendering.ExtendedShader;
 import com.sammy.lodestone.systems.rendering.ShaderUniformHandler;
 import net.minecraft.client.MinecraftClient;
-import net.minecraft.client.render.LightmapTextureManager;
-import net.minecraft.client.render.RenderLayer;
-import net.minecraft.client.render.ShaderProgram;
-import net.minecraft.client.render.VertexConsumerProvider;
+import net.minecraft.client.render.*;
 import net.minecraft.client.util.math.MatrixStack;
 import org.joml.Matrix4f;
 import org.quiltmc.loader.api.QuiltLoader;
 
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
 
 public class RenderHandler {
@@ -106,6 +105,24 @@ public class RenderHandler {
 	}
 
 	public static void draw(VertexConsumerProvider.Immediate source, HashMap<RenderLayer, BufferBuilder> buffers) {
+		Collection<RenderLayer> transparentRenderTypes = new ArrayList<>();
+		for (RenderLayer renderType : buffers.keySet()) {
+			RenderPhase.Transparency transparency = RenderHelper.getTransparencyShard(renderType);
+			if (transparency.equals(NORMAL_TRANSPARENCY)) {
+				transparentRenderTypes.add(renderType);
+			}
+		}
+		if (transparentOnly) {
+			endBatches(bufferSource, transparentRenderTypes);
+		}
+		else {
+			Collection<RenderType> nonTransparentRenderTypes = new ArrayList<>(buffer.keySet());
+			nonTransparentRenderTypes.removeIf(transparentRenderTypes::contains);
+			endBatches(bufferSource, nonTransparentRenderTypes);
+		}
+
+
+
 		for (RenderLayer type : buffers.keySet()) {
 			ShaderProgram instance = RenderHelper.getShader(type);
 			if (UNIFORM_HANDLERS.containsKey(type)) {

@@ -42,10 +42,10 @@ public final class ItemHelper {
 		if (entity instanceof PlayerEntity) {
 			((PlayerEntity) entity).giveItemStack(item);
 		} else {
-			ItemEntity itemEntity = new ItemEntity(entity.world, entity.getX(), entity.getY() + 0.5, entity.getZ(), item);
+			ItemEntity itemEntity = new ItemEntity(entity.getWorld(), entity.getX(), entity.getY() + 0.5, entity.getZ(), item);
 			itemEntity.setPickupDelay(40);
 			itemEntity.setVelocity(itemEntity.getVelocity().multiply(0, 1, 0));
-			entity.world.spawnEntity(itemEntity);
+			entity.getWorld().spawnEntity(itemEntity);
 		}
 	}
 }

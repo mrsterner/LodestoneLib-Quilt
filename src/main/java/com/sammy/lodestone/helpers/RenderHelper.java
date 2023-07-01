@@ -25,6 +25,13 @@ public final class RenderHelper {
 		return null;
 	}
 
+	public static RenderPhase.Transparency getTransparencyShard(RenderLayer layer) {
+		if (layer instanceof RenderLayer.MultiPhase compositeRenderType) {
+			return compositeRenderType.phases.transparency;
+		}
+		return null;
+	}
+
 	public static void vertexPos(VertexConsumer vertexConsumer, Matrix4f last, float x, float y, float z) {
 		vertexConsumer.vertex(last, x, y, z).next();
 	}

@@ -49,7 +49,7 @@ dependencies {
 	//ease of multiplayer testing & game control
 	//modRuntimeOnly "carpet:fabric-carpet:${project.minecraft_version}-${project.carpet_core_version}"
 	//include(implementation(annotationProcessor("com.github.llamalad7.mixinextras:mixinextras-fabric:0.2.0-beta.8")))
-	modImplementation(("io.github.fabricators_of_create.Porting-Lib:Porting-Lib:2.1.1021+1.20"))
+	modImplementation(("io.github.fabricators_of_create.Porting-Lib:core:2.1.1021+1.20"))
 	modCompileOnly("io.vram:frex-fabric:20.0.338")
 
 }

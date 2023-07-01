@@ -52,7 +52,7 @@ public class LodestoneLib implements ModInitializer {
 	@Override
 	public void onInitialize(ModContainer mod) {
 		LOGGER.info("jesser where is the cocainer");
-		MidnightConfig.init(MODID, ClientConfig.class);
+		//MidnightConfig.init(MODID, ClientConfig.class);
 
 		LodestoneAttributeRegistry.init();
 		LodestoneParticleRegistry.init();

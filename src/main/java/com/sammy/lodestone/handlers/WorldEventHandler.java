@@ -53,7 +53,7 @@ public class WorldEventHandler {
 
 	public static void playerJoin(LivingEntity livingEntity) {
 		if (livingEntity instanceof PlayerEntity player) {
-			if (player.world instanceof ServerWorld world) {
+			if (player.getWorld() instanceof ServerWorld world) {
 				LodestoneComponents.PLAYER_COMPONENT.maybeGet(player).flatMap(playerComponent -> LodestoneComponents.LODESTONE_WORLD_COMPONENT.maybeGet(world)).ifPresent(worldComponent -> {
 					if (player instanceof ServerPlayerEntity serverPlayer) {
 						for (WorldEventInstance instance : worldComponent.activeWorldEvents) {

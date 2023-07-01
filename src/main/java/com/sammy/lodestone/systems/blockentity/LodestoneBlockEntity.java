@@ -1,6 +1,5 @@
 package com.sammy.lodestone.systems.blockentity;
 
-import io.github.fabricators_of_create.porting_lib.extensions.extensions.BlockEntityExtensions;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;
@@ -18,15 +17,14 @@ import net.minecraft.world.BlockView;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
 
-public class LodestoneBlockEntity extends BlockEntity implements BlockEntityExtensions {
+public class LodestoneBlockEntity extends BlockEntity   {
 	public boolean needsSync;
 
 	public LodestoneBlockEntity(BlockEntityType<?> type, BlockPos pos, BlockState state) {
 		super(type, pos, state);
 	}
 
-	public void onBreak(@Nullable PlayerEntity player) {
-		invalidateCaps();
+	public void onBreak(PlayerEntity player) {
 	}
 
 	public void onPlace(LivingEntity placer, ItemStack stack) {

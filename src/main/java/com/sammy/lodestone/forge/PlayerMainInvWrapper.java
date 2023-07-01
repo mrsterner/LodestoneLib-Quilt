@@ -24,7 +24,7 @@ public class PlayerMainInvWrapper extends RangedWrapper {
             ItemStack inSlot = getStack(slot);
             if(!inSlot.isEmpty())
             {
-                if (getInventoryPlayer().player.world.isClient())
+                if (getInventoryPlayer().player.getWorld().isClient())
                 {
                     inSlot.setCooldown(5);
                 }
