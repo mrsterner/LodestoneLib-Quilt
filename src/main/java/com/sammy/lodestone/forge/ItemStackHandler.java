@@ -1,5 +1,6 @@
 package com.sammy.lodestone.forge;
 
+import io.github.fabricators_of_create.porting_lib.core.util.INBTSerializable;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.nbt.NbtElement;

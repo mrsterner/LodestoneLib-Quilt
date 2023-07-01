@@ -16,9 +16,9 @@ import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.BlockView;
 import net.minecraft.world.World;
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-import javax.annotation.Nonnull;
 
 public class LodestoneEntityBlock<T extends LodestoneBlockEntity> extends BlockWithEntity {
 	protected BlockEntityType<T> blockEntityType = null;
@@ -55,7 +55,7 @@ public class LodestoneEntityBlock<T extends LodestoneBlockEntity> extends BlockW
 
 
 	@Override
-	public BlockEntity createBlockEntity(@Nonnull BlockPos pos, @Nonnull BlockState state) {
+	public BlockEntity createBlockEntity(@NotNull BlockPos pos, @NotNull BlockState state) {
 		return hasTileEntity(state) ? blockEntityType.instantiate(pos, state) : null;
 	}
 
@@ -65,12 +65,12 @@ public class LodestoneEntityBlock<T extends LodestoneBlockEntity> extends BlockW
 
 	@Override
 	@Nullable
-	public <B extends BlockEntity> BlockEntityTicker<B> getTicker(@Nonnull World level, @Nonnull BlockState state, @Nonnull BlockEntityType<B> type) {
+	public <B extends BlockEntity> BlockEntityTicker<B> getTicker(@NotNull World level, @NotNull BlockState state, @NotNull BlockEntityType<B> type) {
 		return (BlockEntityTicker<B>) ticker;
 	}
 
 	@Override
-	public void onPlaced(@Nonnull World pLevel, @Nonnull BlockPos pPos, @Nonnull BlockState pState, @Nullable LivingEntity pPlacer, @Nonnull ItemStack pStack) {
+	public void onPlaced(@NotNull World pLevel, @NotNull BlockPos pPos, @NotNull BlockState pState, @Nullable LivingEntity pPlacer, @NotNull ItemStack pStack) {
 		if (hasTileEntity(pState)) {
 			if (pLevel.getBlockEntity(pPos) instanceof LodestoneBlockEntity simpleBlockEntity) {
 				simpleBlockEntity.onPlace(pPlacer, pStack);
@@ -93,7 +93,7 @@ public class LodestoneEntityBlock<T extends LodestoneBlockEntity> extends BlockW
 	}
 
 	@Override
-	public void onBreak(@Nonnull World level, @Nonnull BlockPos pos, @Nonnull BlockState state, @Nonnull PlayerEntity player) {
+	public void onBreak(@NotNull World level, @NotNull BlockPos pos, @NotNull BlockState state, @NotNull PlayerEntity player) {
 		onBlockBroken(state, level, pos, player);
 		super.onBreak(level, pos, state, player);
 	}
@@ -107,7 +107,7 @@ public class LodestoneEntityBlock<T extends LodestoneBlockEntity> extends BlockW
 	}
 
 	@Override
-	public void onEntityCollision(@Nonnull BlockState pState, @Nonnull World pLevel, @Nonnull BlockPos pPos, @Nonnull Entity pEntity) {
+	public void onEntityCollision(@NotNull BlockState pState, @NotNull World pLevel, @NotNull BlockPos pPos, @NotNull Entity pEntity) {
 		if (hasTileEntity(pState)) {
 			if (pLevel.getBlockEntity(pPos) instanceof LodestoneBlockEntity simpleBlockEntity) {
 				simpleBlockEntity.onEntityInside(pState, pLevel, pPos, pEntity);
@@ -117,7 +117,7 @@ public class LodestoneEntityBlock<T extends LodestoneBlockEntity> extends BlockW
 	}
 
 	@Override
-	public void neighborUpdate(@Nonnull BlockState pState, @Nonnull World pLevel, @Nonnull BlockPos pPos, @Nonnull Block pBlock, @Nonnull BlockPos pFromPos, boolean pIsMoving) {
+	public void neighborUpdate(@NotNull BlockState pState, @NotNull World pLevel, @NotNull BlockPos pPos, @NotNull Block pBlock, @NotNull BlockPos pFromPos, boolean pIsMoving) {
 		if (hasTileEntity(pState)) {
 			if (pLevel.getBlockEntity(pPos) instanceof LodestoneBlockEntity simpleBlockEntity) {
 				simpleBlockEntity.onNeighborUpdate(pState, pPos, pFromPos);
@@ -127,9 +127,9 @@ public class LodestoneEntityBlock<T extends LodestoneBlockEntity> extends BlockW
 	}
 
 
-	@Nonnull
+	@NotNull
 	@Override
-	public ActionResult onUse(@Nonnull BlockState state, @Nonnull World level, @Nonnull BlockPos pos, @Nonnull PlayerEntity player, @Nonnull Hand hand, @Nonnull BlockHitResult ray) {
+	public ActionResult onUse(@NotNull BlockState state, @NotNull World level, @NotNull BlockPos pos, @NotNull PlayerEntity player, @NotNull Hand hand, @NotNull BlockHitResult ray) {
 		if (hasTileEntity(state)) {
 			if (level.getBlockEntity(pos) instanceof LodestoneBlockEntity simpleBlockEntity) {
 				return simpleBlockEntity.onUse(player, hand);

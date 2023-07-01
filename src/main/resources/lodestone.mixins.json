@@ -4,17 +4,13 @@
   "package": "com.sammy.lodestone.mixin",
   "compatibilityLevel": "JAVA_17",
   "mixins": [
-    "BlockEntityMixin",
     "LivingEntityMixin",
-    "ServerWorldMixin",
-    "WorldChunkMixin",
-    "WorldMixin"
+    "ServerWorldMixin"
   ],
   "client": [
     "BackgroundRendererMixin",
     "CameraMixin",
     "EffectShaderMixin",
-    "EntityRendererMixin",
     "FabricSpriteProviderImplAccessor",
     "GameRendererMixin",
     "HandledScreenMixin",

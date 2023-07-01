@@ -1,6 +1,6 @@
 package com.sammy.lodestone.systems.blockentity;
 
-import com.sammy.lodestone.forge.BlockEntityExtensions;
+import io.github.fabricators_of_create.porting_lib.extensions.extensions.BlockEntityExtensions;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;

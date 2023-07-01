@@ -3,6 +3,7 @@ package com.sammy.lodestone.systems.blockentity;
 
 import com.sammy.lodestone.forge.*;
 import com.sammy.lodestone.helpers.VecHelper;
+import io.github.fabricators_of_create.porting_lib.util.LazyOptional;
 import net.minecraft.entity.ItemEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
@@ -12,8 +13,8 @@ import net.minecraft.util.collection.DefaultedList;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
+import org.jetbrains.annotations.NotNull;
 
-import javax.annotation.Nonnull;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Predicate;
@@ -65,7 +66,7 @@ public class LodestoneBlockEntityInventory extends ItemStackHandler {
 	}
 
 	@Override
-	public boolean isItemValid(int slot, @Nonnull ItemStack stack) {
+	public boolean isItemValid(int slot, @NotNull ItemStack stack) {
 		if (inputPredicate != null) {
 			if (!inputPredicate.test(stack)) {
 				return false;
@@ -74,7 +75,7 @@ public class LodestoneBlockEntityInventory extends ItemStackHandler {
 		return super.isItemValid(slot, stack);
 	}
 
-	@Nonnull
+	@NotNull
 	@Override
 	public ItemStack extractItemStack(int slot, int amount, boolean simulate) {
 		if (outputPredicate != null) {

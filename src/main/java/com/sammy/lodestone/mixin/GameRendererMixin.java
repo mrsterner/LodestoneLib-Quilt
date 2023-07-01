@@ -37,6 +37,7 @@ final class GameRendererMixin {
 		LodestoneShaderRegistry.init(factory);
 		list2.addAll(LodestoneShaderRegistry.shaderList);
 	}
+
 	@Inject(method = "onResized", at = @At(value = "HEAD"))
 	public void injectionResizeListener(int width, int height, CallbackInfo ci) {
 		PostProcessHandler.resize(width, height);

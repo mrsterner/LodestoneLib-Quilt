@@ -34,10 +34,5 @@ public class BackgroundRendererMixin {
 	@Inject( method = "applyFog", at = @At(value = "INVOKE", target = "Lcom/mojang/blaze3d/systems/RenderSystem;setShaderFogShape(Lcom/mojang/blaze3d/shader/FogShape;)V", shift = At.Shift.BEFORE), locals = LocalCapture.CAPTURE_FAILHARD)
 	private static void lodestone$getFog(Camera camera, BackgroundRenderer.FogType fogType, float viewDistance, boolean thickFog, float tickDelta, CallbackInfo ci, CameraSubmersionType cameraSubmersionType, Entity entity, BackgroundRenderer.FogParameters fogParameters) {
 		RenderHandler.cacheFogData(fogParameters.fogStart, fogParameters.fogEnd, fogParameters.shape);
-
-
-
-		//onFogRender(fogParameters, fogType, camera, tickDelta, viewDistance, fogParameters.fogStart, fogParameters.fogEnd, fogParameters.shape);QM
-		//onFogRender(FogRenderer.FogMode mode, FogType type, Camera camera, float partialTick, float renderDistance, float nearDistance, float farDistance, FogShape shape)ForgEvent
 	}
 }
