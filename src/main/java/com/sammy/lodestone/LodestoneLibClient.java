@@ -13,6 +13,8 @@ import net.fabricmc.fabric.api.client.rendering.v1.WorldRenderEvents;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.render.Camera;
 import net.minecraft.client.util.math.MatrixStack;
+import net.minecraft.util.TimeHelper;
+import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
 import org.joml.Matrix4f;
 import org.quiltmc.loader.api.ModContainer;
@@ -41,32 +43,34 @@ public class LodestoneLibClient implements ClientModInitializer {
 
 		WorldRenderEvents.LAST.register(context -> {
 
-			MinecraftClient minecraft = MinecraftClient.getInstance();
-			Camera camera = minecraft.gameRenderer.getCamera();
-			var cameraPos = camera.getPos();
+			MatrixStack poseStack = context.matrixStack();
+			var levelRenderer = context.worldRenderer();
+			Vec3d cameraPos = context.camera().getPos();
+			poseStack.push();
+			poseStack.translate(-cameraPos.x, -cameraPos.y, -cameraPos.z);
 
-			MatrixStack matrixStack = context.matrixStack();
-			matrixStack.push();
 
-			matrixStack.translate(-cameraPos.x, -cameraPos.y, -cameraPos.z);
 			Matrix4f last = RenderSystem.getModelViewMatrix();
-			if (context.worldRenderer().transparencyShader != null) {
+			Matrix4f copy = new Matrix4f(last);
+			if (levelRenderer.transparencyShader != null) {
 				MinecraftClient.getInstance().getFramebuffer().beginWrite(false);
 			}
-			RenderHandler.beginBufferedRendering(matrixStack);
-
+			RenderHandler.beginBufferedRendering(poseStack);
 			RenderHandler.renderBufferedParticles(true);
 			if (RenderHandler.MATRIX4F != null) {
 				RenderSystem.getModelViewMatrix().set(RenderHandler.MATRIX4F);
 			}
 			RenderHandler.renderBufferedBatches(true);
 			RenderHandler.renderBufferedBatches(false);
-			RenderSystem.getModelViewMatrix().set(last);
+			RenderSystem.getModelViewMatrix().set(copy);
 			RenderHandler.renderBufferedParticles(false);
-			if (context.worldRenderer().transparencyShader != null) {
-				context.worldRenderer().getCloudsFramebuffer().beginWrite(false);
+
+			RenderHandler.endBufferedRendering(poseStack);
+			if (levelRenderer.transparencyShader != null) {
+				levelRenderer.getCloudsFramebuffer().beginWrite(false);
 			}
-			matrixStack.pop();
+
+			poseStack.pop();
 		});
 
 		ClientPlayNetworking.registerGlobalReceiver(ScreenshakePacket.ID, (client, handler, buf, responseSender) -> new ScreenshakePacket(buf).apply(client.getNetworkHandler()));
