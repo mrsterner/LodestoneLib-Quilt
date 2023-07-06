@@ -1,5 +1,6 @@
 package com.sammy.lodestone.systems.particle.world;
 
+import com.mojang.blaze3d.platform.GlStateManager;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.BufferBuilder;
 import com.mojang.blaze3d.vertex.Tessellator;
@@ -62,6 +63,31 @@ public interface LodestoneWorldParticleTextureSheet extends ParticleTextureSheet
 		@Override
 		public void draw(Tessellator tessellator) {
 			tessellator.draw();
+			RenderSystem.depthMask(true);
+			RenderSystem.disableBlend();
+			RenderSystem.defaultBlendFunc();
+		}
+	};
+
+	LodestoneWorldParticleTextureSheet LUMITRANSPARENT = new LodestoneWorldParticleTextureSheet() {
+		@Override
+		public RenderLayer getType() {
+			return LodestoneRenderLayerRegistry.LUMITRANSPARENT_PARTICLE;
+		}
+
+		@Override
+		public void begin(BufferBuilder builder, TextureManager manager) {
+			RenderSystem.depthMask(false);
+			RenderSystem.enableBlend();
+			RenderSystem.blendFunc(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA);
+			RenderSystem.setShader(LodestoneShaderRegistry.PARTICLE.getInstance());
+			RenderSystem.setShaderTexture(0, SpriteAtlasTexture.PARTICLE_ATLAS_TEXTURE);
+			builder.begin(VertexFormat.DrawMode.QUADS, VertexFormats.POSITION_TEXTURE_COLOR_LIGHT);
+		}
+
+		@Override
+		public void draw(Tessellator tesselator) {
+			tesselator.draw();
 			RenderSystem.depthMask(true);
 			RenderSystem.disableBlend();
 			RenderSystem.defaultBlendFunc();

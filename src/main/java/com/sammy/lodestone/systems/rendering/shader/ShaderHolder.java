@@ -1,16 +1,22 @@
-package com.sammy.lodestone.systems.rendering;
+package com.sammy.lodestone.systems.rendering.shader;
 
 
 import com.mojang.blaze3d.systems.RenderSystem;
+import com.mojang.blaze3d.vertex.VertexFormat;
+import com.sammy.lodestone.systems.rendering.UniformData;
 import net.minecraft.client.render.RenderPhase;
 import net.minecraft.client.render.ShaderProgram;
 import net.minecraft.client.texture.SpriteAtlasTexture;
+import net.minecraft.resource.ResourceManager;
+import net.minecraft.util.Identifier;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Supplier;
 
 public class ShaderHolder {
+
 	public ExtendedShader instance;
 	public ArrayList<String> uniforms;
 	public ArrayList<UniformData> defaultUniformData = new ArrayList<>();

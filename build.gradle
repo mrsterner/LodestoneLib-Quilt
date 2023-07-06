@@ -17,7 +17,7 @@ repositories {
 	}
 	maven { url 'https://masa.dy.fi/maven' }
 	maven { url 'https://maven.terraformersmc.com' }
-	maven { url = "https://jitpack.io" }
+	//maven { url = "https://jitpack.io" }
 	maven {
 		name = "Modrinth"
 		url = "https://api.modrinth.com/maven"
@@ -29,6 +29,9 @@ repositories {
 		url = "https://maven.vram.io/"
 	}
 	maven { url = "https://maven.shedaniel.me/" }
+
+	mavenLocal()
+
 }
 
 // All the default dependencies are declared at gradle/libs.version.toml and referenced with "libs.<id>"
@@ -49,7 +52,7 @@ dependencies {
 	//ease of multiplayer testing & game control
 	//modRuntimeOnly "carpet:fabric-carpet:${project.minecraft_version}-${project.carpet_core_version}"
 	//include(implementation(annotationProcessor("com.github.llamalad7.mixinextras:mixinextras-fabric:0.2.0-beta.8")))
-	modImplementation(("io.github.fabricators_of_create.Porting-Lib:core:2.1.1021+1.20"))
+	modImplementation include("io.github.fabricators_of_create.Porting-Lib:core:2.1.1043+1.20")
 	modCompileOnly("io.vram:frex-fabric:20.0.338")
 
 }

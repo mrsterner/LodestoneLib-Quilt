@@ -12,6 +12,6 @@ import org.spongepowered.asm.mixin.injection.ModifyArg;
 public class EffectShaderMixin {
 	@ModifyArg(method = "compileShader(Lcom/mojang/blaze3d/shader/ShaderStage$Type;Ljava/lang/String;Ljava/io/InputStream;Ljava/lang/String;)Lcom/mojang/blaze3d/shader/EffectShader;", at = @At(value = "INVOKE", target = "Lcom/mojang/blaze3d/shader/EffectShader;compileShaderInternal(Lcom/mojang/blaze3d/shader/ShaderStage$Type;Ljava/lang/String;Ljava/io/InputStream;Ljava/lang/String;Lcom/mojang/blaze3d/shader/GlslImportProcessor;)I"), index = 4)
 	private static GlslImportProcessor useCustomPreprocessor(GlslImportProcessor org) {
-		return new LodestoneGlslPreprocessor();
+		return LodestoneGlslPreprocessor.PREPROCESSOR;
 	}
 }

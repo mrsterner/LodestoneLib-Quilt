@@ -12,6 +12,9 @@ import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
 
 public class LodestoneGlslPreprocessor extends GlslImportProcessor {
+
+	public static final LodestoneGlslPreprocessor PREPROCESSOR = new LodestoneGlslPreprocessor();
+
 	@Nullable
 	@Override
 	public String loadImport(boolean inline, String name) {

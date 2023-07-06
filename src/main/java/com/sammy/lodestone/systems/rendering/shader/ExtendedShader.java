@@ -1,10 +1,12 @@
-package com.sammy.lodestone.systems.rendering;
+package com.sammy.lodestone.systems.rendering.shader;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.mojang.blaze3d.shader.GlUniform;
+import com.mojang.blaze3d.shader.Uniform;
 import com.mojang.blaze3d.vertex.VertexFormat;
+import com.sammy.lodestone.systems.rendering.UniformData;
 import net.minecraft.client.gl.ShaderParseException;
 import net.minecraft.client.render.ShaderProgram;
 import net.minecraft.resource.ResourceFactory;
@@ -13,8 +15,14 @@ import net.minecraft.util.JsonHelper;
 
 import java.io.IOException;
 import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.function.Consumer;
 
 public class ExtendedShader extends ShaderProgram {
+
+	public final Map<String, Consumer<Uniform>> defaultUniformData = new HashMap<>();
+
 	public ExtendedShader(ResourceFactory resourceFactory, String string, VertexFormat vertexFormat) throws IOException {
 		super(resourceFactory, string, vertexFormat);
 	}

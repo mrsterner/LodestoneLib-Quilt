@@ -4,8 +4,8 @@ import com.mojang.blaze3d.platform.GlStateManager;
 import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.render.RenderPhase;
 
-public class Phases extends RenderPhase {
-	public Phases(String string, Runnable runnable, Runnable runnable2) {
+public class RenderPhases extends RenderPhase {
+	public RenderPhases(String string, Runnable runnable, Runnable runnable2) {
 		super(string, runnable, runnable2);
 	}
 	public static final Transparency ADDITIVE_TRANSPARENCY = new Transparency("additive_transparency", () -> {

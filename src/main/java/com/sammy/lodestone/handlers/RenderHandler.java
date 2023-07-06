@@ -4,9 +4,8 @@ import com.mojang.blaze3d.shader.FogShape;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.BufferBuilder;
 import com.sammy.lodestone.helpers.RenderHelper;
-import com.sammy.lodestone.setup.LodestoneRenderLayerRegistry;
-import com.sammy.lodestone.systems.rendering.ExtendedShader;
-import com.sammy.lodestone.systems.rendering.ShaderUniformHandler;
+import com.sammy.lodestone.systems.rendering.shader.ExtendedShader;
+import com.sammy.lodestone.systems.rendering.renderlayer.ShaderUniformHandler;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.render.*;
 import net.minecraft.client.util.math.MatrixStack;
@@ -16,6 +15,8 @@ import org.quiltmc.loader.api.QuiltLoader;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
+
+import static com.sammy.lodestone.systems.rendering.RenderPhases.NORMAL_TRANSPARENCY;
 
 public class RenderHandler {
 	public static HashMap<RenderLayer, BufferBuilder> BUFFERS = new HashMap<>();
@@ -80,14 +81,30 @@ public class RenderHandler {
 		FOG_SHAPE = shaderFogShape;
 	}
 
-	public static void renderBufferedBatches(MatrixStack matrixStack) {
-		draw(DELAYED_RENDER, BUFFERS);
+	public static void renderBufferedParticles(boolean transparentOnly) {
+		renderBufferedBatches(DELAYED_PARTICLE_RENDER, PARTICLE_BUFFERS, transparentOnly);
 	}
 
-	public static void renderBufferedParticles(MatrixStack matrixStack) {
-		DELAYED_PARTICLE_RENDER.draw(LodestoneRenderLayerRegistry.TRANSPARENT_PARTICLE);
-		DELAYED_PARTICLE_RENDER.draw(LodestoneRenderLayerRegistry.ADDITIVE_PARTICLE);
-		draw(DELAYED_PARTICLE_RENDER, PARTICLE_BUFFERS);
+	public static void renderBufferedBatches(boolean transparentOnly) {
+		renderBufferedBatches(DELAYED_RENDER, BUFFERS, transparentOnly);
+	}
+
+	private static void renderBufferedBatches(VertexConsumerProvider.Immediate bufferSource, HashMap<RenderLayer, BufferBuilder> buffer, boolean transparentOnly) {
+		Collection<RenderLayer> transparentRenderTypes = new ArrayList<>();
+		for (RenderLayer renderType : buffer.keySet()) {
+			RenderPhase.Transparency transparency = RenderHelper.getTransparencyShard(renderType);
+			if (transparency.equals(NORMAL_TRANSPARENCY)) {
+				transparentRenderTypes.add(renderType);
+			}
+		}
+		if (transparentOnly) {
+			draw(bufferSource, transparentRenderTypes);
+		}
+		else {
+			Collection<RenderLayer> nonTransparentRenderTypes = new ArrayList<>(buffer.keySet());
+			nonTransparentRenderTypes.removeIf(transparentRenderTypes::contains);
+			draw(bufferSource, nonTransparentRenderTypes);
+		}
 	}
 
 	public static void endBufferedRendering(MatrixStack poseStack) {
@@ -104,26 +121,8 @@ public class RenderHandler {
 		RenderSystem.depthMask(true);
 	}
 
-	public static void draw(VertexConsumerProvider.Immediate source, HashMap<RenderLayer, BufferBuilder> buffers) {
-		Collection<RenderLayer> transparentRenderTypes = new ArrayList<>();
-		for (RenderLayer renderType : buffers.keySet()) {
-			RenderPhase.Transparency transparency = RenderHelper.getTransparencyShard(renderType);
-			if (transparency.equals(NORMAL_TRANSPARENCY)) {
-				transparentRenderTypes.add(renderType);
-			}
-		}
-		if (transparentOnly) {
-			endBatches(bufferSource, transparentRenderTypes);
-		}
-		else {
-			Collection<RenderType> nonTransparentRenderTypes = new ArrayList<>(buffer.keySet());
-			nonTransparentRenderTypes.removeIf(transparentRenderTypes::contains);
-			endBatches(bufferSource, nonTransparentRenderTypes);
-		}
-
-
-
-		for (RenderLayer type : buffers.keySet()) {
+	public static void draw(VertexConsumerProvider.Immediate source, Collection<RenderLayer> buffers) {
+		for (RenderLayer type : buffers) {
 			ShaderProgram instance = RenderHelper.getShader(type);
 			if (UNIFORM_HANDLERS.containsKey(type)) {
 				ShaderUniformHandler handler = UNIFORM_HANDLERS.get(type);
