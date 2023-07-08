@@ -49,9 +49,8 @@ public class LodestoneLibClient implements ClientModInitializer {
 			poseStack.push();
 			poseStack.translate(-cameraPos.x, -cameraPos.y, -cameraPos.z);
 
+			Matrix4f copy = new Matrix4f(RenderSystem.getModelViewMatrix());
 
-			Matrix4f last = RenderSystem.getModelViewMatrix();
-			Matrix4f copy = new Matrix4f(last);
 			if (levelRenderer.transparencyShader != null) {
 				MinecraftClient.getInstance().getFramebuffer().beginWrite(false);
 			}
