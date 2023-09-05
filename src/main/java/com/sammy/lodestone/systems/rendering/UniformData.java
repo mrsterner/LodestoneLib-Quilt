@@ -1,6 +1,7 @@
 package com.sammy.lodestone.systems.rendering;
 
-import com.mojang.blaze3d.shader.Uniform;
+
+import net.minecraft.client.gl.Uniform;
 
 public class UniformData {
 	public final String uniformName;
@@ -28,7 +29,7 @@ public class UniformData {
 			if (uniformType <= 7) {
 				uniform.setForDataType(array[0], array[1], array[2], array[3]);
 			} else {
-				uniform.setFloats(array);
+				uniform.set(array);
 			}
 		}
 	}

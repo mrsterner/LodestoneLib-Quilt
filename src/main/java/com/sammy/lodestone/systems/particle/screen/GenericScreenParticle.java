@@ -6,7 +6,8 @@ import com.sammy.lodestone.systems.particle.data.GenericParticleData;
 import com.sammy.lodestone.systems.particle.data.SpinParticleData;
 import com.sammy.lodestone.systems.particle.screen.base.SpriteBillboardScreenParticle;
 import net.fabricmc.fabric.impl.client.particle.FabricSpriteProviderImpl;
-import net.minecraft.client.util.ColorUtil;
+import net.minecraft.client.render.BufferBuilder;
+import net.minecraft.util.math.ColorHelper;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
 import org.joml.Vector3d;
@@ -81,9 +82,9 @@ public class GenericScreenParticle extends SpriteBillboardScreenParticle {
 		float s = MathHelper.lerp(colorCoeff, hsv1[1], hsv2[1]);
 		float v = MathHelper.lerp(colorCoeff, hsv1[2], hsv2[2]);
 		int packed = Color.HSBtoRGB(h, s, v);
-		float r = ColorUtil.ARGB32.getRed(packed) / 255.0f;
-		float g = ColorUtil.ARGB32.getGreen(packed) / 255.0f;
-		float b = ColorUtil.ARGB32.getBlue(packed) / 255.0f;
+		float r = ColorHelper.Argb.getRed(packed) / 255.0f;
+		float g = ColorHelper.Argb.getGreen(packed) / 255.0f;
+		float b = ColorHelper.Argb.getBlue(packed) / 255.0f;
 		setColor(r, g, b);
 	}
 
@@ -131,6 +132,11 @@ public class GenericScreenParticle extends SpriteBillboardScreenParticle {
 			setSpriteForAge(spriteSet);
 		}
 		super.tick();
+	}
+
+	@Override
+	public void render(BufferBuilder bufferBuilder) {
+
 	}
 
 	@Override

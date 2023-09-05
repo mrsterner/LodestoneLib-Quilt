@@ -25,9 +25,8 @@ public abstract class ILodestoneRecipe implements Recipe<Inventory> {
 		return false;
 	}
 
-	@Deprecated
 	@Override
-	public ItemStack getResult(DynamicRegistryManager registryManager) {
+	public ItemStack getOutput(DynamicRegistryManager registryManager) {
 		return ItemStack.EMPTY;
 	}
 

@@ -1,7 +1,7 @@
 package com.sammy.lodestone.systems.rendering;
 
 
-import com.mojang.blaze3d.vertex.VertexConsumer;
+import net.minecraft.client.render.VertexConsumer;
 import net.minecraft.util.math.Vec2f;
 import org.joml.Vector4f;
 

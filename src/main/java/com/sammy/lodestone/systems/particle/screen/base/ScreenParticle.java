@@ -1,8 +1,8 @@
 package com.sammy.lodestone.systems.particle.screen.base;
 
-import com.mojang.blaze3d.vertex.BufferBuilder;
 import com.sammy.lodestone.systems.particle.screen.LodestoneScreenParticleTextureSheet;
-import net.minecraft.util.random.RandomGenerator;
+import net.minecraft.client.render.BufferBuilder;
+import net.minecraft.util.math.random.Random;
 import net.minecraft.world.World;
 
 public abstract class ScreenParticle {
@@ -21,7 +21,7 @@ public abstract class ScreenParticle {
     public double totalX;
     public double totalY;
     public boolean removed;
-    public final RandomGenerator random = RandomGenerator.createLegacy();
+    public final Random random = Random.create();
     public int age;
     public int maxAge;
     public float gravityStrength;

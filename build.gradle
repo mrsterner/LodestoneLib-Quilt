@@ -1,7 +1,7 @@
 plugins {
 	id 'maven-publish'
 	id 'io.github.juuxel.loom-quiltflower' version '1.8.+'
-	id 'org.quiltmc.loom' version '1.2.+'
+	id 'fabric-loom' version '1.3-SNAPSHOT'
 }
 
 archivesBaseName = project.archives_base_name + project.minecraft_version
@@ -12,23 +12,27 @@ targetCompatibility = 1.17
 
 repositories {
 	maven {
-		name = "Ladysnake"
-		url = "https://ladysnake.jfrog.io/artifactory/mods"
+		url 'https://maven.terraformersmc.com'
 	}
-	maven { url 'https://masa.dy.fi/maven' }
-	maven { url 'https://maven.terraformersmc.com' }
-	//maven { url = "https://jitpack.io" }
+
 	maven {
 		name = "Modrinth"
 		url = "https://api.modrinth.com/maven"
 		content { includeGroup "maven.modrinth" }
 	}
-	maven { url = "https://mvn.devos.one/snapshots/" }
+
 	maven {
-		name = "vram"
-		url = "https://maven.vram.io/"
+		name = 'Ladysnake Mods'
+		url = 'https://maven.ladysnake.org/releases'
 	}
-	maven { url = "https://maven.shedaniel.me/" }
+
+	maven {
+		url = "https://mvn.devos.one/snapshots/"
+	}
+
+	maven {
+		url = "https://maven.shedaniel.me/"
+	}
 
 	mavenLocal()
 
@@ -39,28 +43,25 @@ repositories {
 dependencies {
 	minecraft "com.mojang:minecraft:${project.minecraft_version}"
 
-	mappings "org.quiltmc:quilt-mappings:${minecraft_version}+build.${quilt_mappings}:intermediary-v2"
+	mappings "net.fabricmc:yarn:${project.yarn_mappings}:v2"
+	modImplementation "net.fabricmc:fabric-loader:${project.loader_version}"
 
-	modImplementation "org.quiltmc:quilt-loader:${project.loader_version}"
-	modImplementation "org.quiltmc.quilted-fabric-api:quilted-fabric-api:${project.quilted_fabric_api_version}-${project.minecraft_version}"
-	//modImplementation include("io.github.ladysnake:satin:${project.satin_version}")
+	// Fabric API. This is technically optional, but you probably want it anyway.
+	modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
 	modImplementation include("maven.modrinth:midnightlib:${project.midnightlib_version}-fabric")
 
 	modImplementation "dev.onyxstudios.cardinal-components-api:cardinal-components-base:${project.cca}"
 	modImplementation "dev.onyxstudios.cardinal-components-api:cardinal-components-entity:${project.cca}"
 	modImplementation "dev.onyxstudios.cardinal-components-api:cardinal-components-world:${project.cca}"
-	//ease of multiplayer testing & game control
-	//modRuntimeOnly "carpet:fabric-carpet:${project.minecraft_version}-${project.carpet_core_version}"
-	//include(implementation(annotationProcessor("com.github.llamalad7.mixinextras:mixinextras-fabric:0.2.0-beta.8")))
-	modImplementation include("io.github.fabricators_of_create.Porting-Lib:core:2.1.1043+1.20")
-	modCompileOnly("io.vram:frex-fabric:20.0.338")
 
+	include(implementation(annotationProcessor("io.github.llamalad7:mixinextras-fabric:0.2.0-rc.2")))
+	modImplementation include("io.github.fabricators_of_create.Porting-Lib:core:2.1.1127+1.20")
 }
 
 processResources {
 	inputs.property "version", version
 
-	filesMatching('quilt.mod.json') {
+	filesMatching('fabric.mod.json') {
 		expand "version": version
 	}
 }

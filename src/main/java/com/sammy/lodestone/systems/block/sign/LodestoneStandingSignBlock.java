@@ -4,12 +4,12 @@ import com.sammy.lodestone.systems.blockentity.LodestoneSignBlockEntity;
 import net.minecraft.block.BlockEntityProvider;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.SignBlock;
+import net.minecraft.block.WoodType;
 import net.minecraft.block.entity.BlockEntity;
-import net.minecraft.util.SignType;
 import net.minecraft.util.math.BlockPos;
 
 public class LodestoneStandingSignBlock extends SignBlock implements BlockEntityProvider {
-	public LodestoneStandingSignBlock(Settings settings, SignType signType) {
+	public LodestoneStandingSignBlock(Settings settings, WoodType signType) {
 		super(settings, signType);
 	}
 

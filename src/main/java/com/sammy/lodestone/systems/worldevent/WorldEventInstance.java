@@ -4,10 +4,10 @@ import com.sammy.lodestone.component.LodestoneComponents;
 import com.sammy.lodestone.network.SyncWorldEventPacket;
 import com.sammy.lodestone.setup.worldevent.LodestoneWorldEventTypeRegistry;
 import dev.onyxstudios.cca.api.v3.component.sync.AutoSyncedComponent;
+import net.fabricmc.fabric.api.networking.v1.PlayerLookup;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.world.World;
-import org.quiltmc.qsl.networking.api.PlayerLookup;
 
 import java.util.UUID;
 

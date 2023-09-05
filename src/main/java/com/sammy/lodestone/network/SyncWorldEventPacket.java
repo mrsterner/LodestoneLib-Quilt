@@ -5,6 +5,8 @@ import com.sammy.lodestone.handlers.WorldEventHandler;
 import com.sammy.lodestone.setup.worldevent.LodestoneWorldEventTypeRegistry;
 import com.sammy.lodestone.systems.worldevent.WorldEventType;
 import io.netty.buffer.Unpooled;
+import net.fabricmc.fabric.api.networking.v1.PacketSender;
+import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.network.ClientPlayNetworkHandler;
 import net.minecraft.client.world.ClientWorld;
@@ -13,8 +15,6 @@ import net.minecraft.nbt.NbtCompound;
 import net.minecraft.network.PacketByteBuf;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.util.Identifier;
-import org.quiltmc.qsl.networking.api.PacketSender;
-import org.quiltmc.qsl.networking.api.ServerPlayNetworking;
 
 public class SyncWorldEventPacket {
 	public static final Identifier ID = new Identifier(LodestoneLib.MODID, "world_event");

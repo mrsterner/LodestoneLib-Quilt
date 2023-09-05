@@ -1,7 +1,7 @@
 package com.sammy.lodestone.helpers;
 
 import net.minecraft.util.math.*;
-import net.minecraft.util.random.RandomGenerator;
+import net.minecraft.util.math.random.Random;
 import net.minecraft.world.World;
 
 import java.util.ArrayList;
@@ -97,7 +97,7 @@ public class VecHelper {
 	public static ArrayList<Vec3d> blockOutlinePositions(World world, BlockPos pos) {
 		ArrayList<Vec3d> arrayList = new ArrayList<>();
 		double d0 = 0.5625D;
-		RandomGenerator random = world.random;
+		Random random = world.random;
 		for (Direction direction : Direction.values()) {
 			BlockPos blockpos = pos.offset(direction);
 			if (!world.getBlockState(blockpos).isOpaqueFullCube(world, blockpos)) {

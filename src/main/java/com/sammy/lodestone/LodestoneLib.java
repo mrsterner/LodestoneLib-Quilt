@@ -10,6 +10,11 @@ import com.sammy.lodestone.systems.particle.data.ColorParticleData;
 import com.sammy.lodestone.systems.particle.data.GenericParticleData;
 import com.sammy.lodestone.systems.particle.data.SpinParticleData;
 import eu.midnightdust.lib.config.MidnightConfig;
+import net.fabricmc.api.ModInitializer;
+import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
+import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
+import net.fabricmc.fabric.api.object.builder.v1.block.entity.FabricBlockEntityTypeBuilder;
+import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.BlockWithEntity;
@@ -23,18 +28,12 @@ import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.random.RandomGenerator;
+import net.minecraft.util.math.random.Random;
 import net.minecraft.world.World;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.jetbrains.annotations.Nullable;
 import org.joml.Vector3f;
-import org.quiltmc.loader.api.ModContainer;
-import org.quiltmc.loader.api.QuiltLoader;
-import org.quiltmc.qsl.base.api.entrypoint.ModInitializer;
-import org.quiltmc.qsl.block.entity.api.QuiltBlockEntityTypeBuilder;
-import org.quiltmc.qsl.block.extensions.api.QuiltBlockSettings;
-import org.quiltmc.qsl.item.setting.api.QuiltItemSettings;
 
 import java.awt.*;
 
@@ -43,14 +42,14 @@ public class LodestoneLib implements ModInitializer {
 	public static final String MODID = "lodestone";
 	public static final Vector3f VEC3F_ZERO = new Vector3f();
 
-	public static final RandomGenerator RANDOM = RandomGenerator.createLegacy();
+	public static final Random RANDOM = Random.create();
 
-	public static final Block TEST = new TestBlock(QuiltBlockSettings.copyOf(Blocks.STONE));
-	public static final Item TEST_ITEM = new BlockItem(TEST, new QuiltItemSettings());
-	public static final BlockEntityType TEST_ENTITY = QuiltBlockEntityTypeBuilder.create(TestBlockEntity::new , TEST).build();
+	public static final Block TEST = new TestBlock(FabricBlockSettings.copyOf(Blocks.STONE));
+	public static final Item TEST_ITEM = new BlockItem(TEST, new FabricItemSettings());
+	public static final BlockEntityType TEST_ENTITY = FabricBlockEntityTypeBuilder.create(TestBlockEntity::new , TEST).build();
 
 	@Override
-	public void onInitialize(ModContainer mod) {
+	public void onInitialize() {
 		LOGGER.info("jesser where is the cocainer");
 		//MidnightConfig.init(MODID, ClientConfig.class);
 
@@ -58,7 +57,7 @@ public class LodestoneLib implements ModInitializer {
 		LodestoneParticleRegistry.init();
 		LodestoneBlockEntityRegistry.init();
 
-		if(QuiltLoader.isDevelopmentEnvironment()){
+		if(FabricLoader.getInstance().isDevelopmentEnvironment()){
 			Registry.register(Registries.BLOCK, new Identifier("lodestone", "test"), TEST);
 			Registry.register(Registries.ITEM, new Identifier("lodestone", "test_item"), TEST_ITEM);
 			Registry.register(Registries.BLOCK_ENTITY_TYPE, new Identifier("lodestone", "test_entity"), TEST_ENTITY);

@@ -58,7 +58,7 @@ public class LodestoneBlockFiller {
 				return false;
 			}
 			BlockState state = level.getBlockState(pos);
-			return level.isAir(pos) || state.materialReplaceable();
+			return level.isAir(pos) || state.isReplaceable();
 		}
 
 		public void place(WorldAccess level, BlockPos pos) {

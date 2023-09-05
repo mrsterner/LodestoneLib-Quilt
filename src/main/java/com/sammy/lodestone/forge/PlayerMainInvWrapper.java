@@ -26,7 +26,7 @@ public class PlayerMainInvWrapper extends RangedWrapper {
             {
                 if (getInventoryPlayer().player.getWorld().isClient())
                 {
-                    inSlot.setCooldown(5);
+                    inSlot.setBobbingAnimationTime(5);
                 }
                 else if(getInventoryPlayer().player instanceof ServerPlayerEntity) {
                     getInventoryPlayer().player.currentScreenHandler.sendContentUpdates();

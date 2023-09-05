@@ -6,7 +6,6 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
-import net.minecraft.util.random.RandomGenerator;
 import net.minecraft.world.World;
 
 import java.util.*;
@@ -175,7 +174,7 @@ public class DataHelper {
 	public static ArrayList<Vec3d> blockOutlinePositions(World world, BlockPos pos) {
 		ArrayList<Vec3d> arrayList = new ArrayList<>();
 		double d0 = 0.5625D;
-		RandomGenerator random = world.random;
+		net.minecraft.util.math.random.Random random = world.random;
 		for (Direction direction : Direction.values()) {
 			BlockPos blockpos = pos.offset(direction);
 			if (!world.getBlockState(blockpos).isOpaqueFullCube(world, blockpos)) {

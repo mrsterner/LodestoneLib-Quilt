@@ -1,12 +1,12 @@
 package com.sammy.lodestone.systems.rendering.multipasses;
 
-import com.mojang.blaze3d.framebuffer.Framebuffer;
-import com.mojang.blaze3d.framebuffer.WindowFramebuffer;
 import com.mojang.blaze3d.systems.RenderSystem;
-import com.mojang.blaze3d.texture.NativeImage;
 import com.sammy.lodestone.LodestoneLib;
 import net.minecraft.client.MinecraftClient;
+import net.minecraft.client.gl.Framebuffer;
+import net.minecraft.client.gl.WindowFramebuffer;
 import net.minecraft.client.texture.AbstractTexture;
+import net.minecraft.client.texture.NativeImage;
 import net.minecraft.resource.ResourceManager;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.MathHelper;
@@ -156,7 +156,7 @@ public class DynamicTexture extends AbstractTexture {
 		int parentTextureHeight = GL11.glGetTexLevelParameteri(GL11.GL_TEXTURE_2D, 0, GL11.GL_TEXTURE_HEIGHT);
 
 		int minimumSize = Math.min(parentTextureWidth, parentTextureHeight);
-		int mipmapLevels = MathHelper.log2(minimumSize);
+		int mipmapLevels = MathHelper.floorLog2(minimumSize);
 
 		List<Path> textureFiles = new ArrayList<>();
 		for (int level = 0; level < mipmapLevels; level++) {

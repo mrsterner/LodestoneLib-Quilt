@@ -1,18 +1,17 @@
 package com.sammy.lodestone.setup;
 
-import com.mojang.blaze3d.vertex.VertexFormat;
-import com.mojang.blaze3d.vertex.VertexFormats;
 import com.mojang.datafixers.util.Pair;
 import com.sammy.lodestone.handlers.RenderHandler;
 import com.sammy.lodestone.systems.rendering.RenderPhases;
 import com.sammy.lodestone.systems.rendering.renderlayer.ShaderUniformHandler;
+import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.client.render.RenderLayer;
 import net.minecraft.client.render.RenderPhase;
-import net.minecraft.client.render.ShaderProgram;
+import net.minecraft.client.render.VertexFormat;
+import net.minecraft.client.render.VertexFormats;
 import net.minecraft.client.texture.SpriteAtlasTexture;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.Util;
-import org.quiltmc.loader.api.QuiltLoader;
 
 import java.util.HashMap;
 import java.util.function.Function;
@@ -40,11 +39,11 @@ public class LodestoneRenderLayerRegistry extends RenderPhase {
 
 	public static final RenderLayer ADDITIVE_PARTICLE = createGenericRenderLayer(MODID, "additive_particle", VertexFormats.POSITION_TEXTURE_COLOR_LIGHT, VertexFormat.DrawMode.QUADS, LodestoneShaderRegistry.PARTICLE.phase, RenderPhases.ADDITIVE_TRANSPARENCY, SpriteAtlasTexture.PARTICLE_ATLAS_TEXTURE);
 	public static final RenderLayer ADDITIVE_BLOCK = createGenericRenderLayer(MODID, "block", VertexFormats.POSITION_COLOR_TEXTURE_LIGHT, VertexFormat.DrawMode.QUADS, LodestoneShaderRegistry.ADDITIVE_TEXTURE.phase, RenderPhases.ADDITIVE_TRANSPARENCY, SpriteAtlasTexture.BLOCK_ATLAS_TEXTURE);
-	public static final RenderLayer ADDITIVE_SOLID = createGenericRenderLayer(MODID, "additive_solid", VertexFormats.POSITION_COLOR_LIGHT, VertexFormat.DrawMode.QUADS, RenderPhase.POSITION_COLOR_LIGHTMAP_SHADER, RenderPhases.ADDITIVE_TRANSPARENCY);
+	public static final RenderLayer ADDITIVE_SOLID = createGenericRenderLayer(MODID, "additive_solid", VertexFormats.POSITION_COLOR_LIGHT, VertexFormat.DrawMode.QUADS, RenderPhase.POSITION_COLOR_LIGHTMAP_PROGRAM, RenderPhases.ADDITIVE_TRANSPARENCY);
 
 	public static final RenderLayer TRANSPARENT_PARTICLE = createGenericRenderLayer(MODID, "transparent_particle", VertexFormats.POSITION_TEXTURE_COLOR_LIGHT, VertexFormat.DrawMode.QUADS, LodestoneShaderRegistry.PARTICLE.phase, RenderPhases.NORMAL_TRANSPARENCY, SpriteAtlasTexture.PARTICLE_ATLAS_TEXTURE);
-	public static final RenderLayer TRANSPARENT_BLOCK = createGenericRenderLayer(MODID, "transparent_block", VertexFormats.POSITION_COLOR_TEXTURE_LIGHT, VertexFormat.DrawMode.QUADS, RenderPhase.POSITION_COLOR_LIGHTMAP_SHADER, RenderPhases.NORMAL_TRANSPARENCY, SpriteAtlasTexture.PARTICLE_ATLAS_TEXTURE);
-	public static final RenderLayer TRANSPARENT_SOLID = createGenericRenderLayer(MODID, "transparent_solid", VertexFormats.POSITION_COLOR_LIGHT, VertexFormat.DrawMode.QUADS, RenderPhase.POSITION_COLOR_LIGHTMAP_SHADER, RenderPhases.NORMAL_TRANSPARENCY);
+	public static final RenderLayer TRANSPARENT_BLOCK = createGenericRenderLayer(MODID, "transparent_block", VertexFormats.POSITION_COLOR_TEXTURE_LIGHT, VertexFormat.DrawMode.QUADS, RenderPhase.POSITION_COLOR_LIGHTMAP_PROGRAM, RenderPhases.NORMAL_TRANSPARENCY, SpriteAtlasTexture.PARTICLE_ATLAS_TEXTURE);
+	public static final RenderLayer TRANSPARENT_SOLID = createGenericRenderLayer(MODID, "transparent_solid", VertexFormats.POSITION_COLOR_LIGHT, VertexFormat.DrawMode.QUADS, RenderPhase.POSITION_COLOR_LIGHTMAP_PROGRAM, RenderPhases.NORMAL_TRANSPARENCY);
 
 
 	public static final RenderLayer LUMITRANSPARENT_PARTICLE = copyWithUniformChanges(TRANSPARENT_PARTICLE, ShaderUniformHandler.LUMITRANSPARENT);
@@ -55,9 +54,9 @@ public class LodestoneRenderLayerRegistry extends RenderPhase {
 	 * Render Functions. You can create Render Types by statically applying these to your texture. Alternatively, use {@link #GENERIC} if none of the presets suit your needs.
 	 */
 
-	public static final RenderLayerProvider TEXTURE = new RenderLayerProvider((texture) -> createGenericRenderLayer(texture.getNamespace(), "texture", VertexFormats.POSITION_COLOR_TEXTURE_LIGHT, VertexFormat.DrawMode.QUADS, RenderPhase.POSITION_COLOR_LIGHTMAP_SHADER, RenderPhases.NO_TRANSPARENCY, texture));
+	public static final RenderLayerProvider TEXTURE = new RenderLayerProvider((texture) -> createGenericRenderLayer(texture.getNamespace(), "texture", VertexFormats.POSITION_COLOR_TEXTURE_LIGHT, VertexFormat.DrawMode.QUADS, RenderPhase.POSITION_COLOR_LIGHTMAP_PROGRAM, RenderPhases.NO_TRANSPARENCY, texture));
 
-	public static final RenderLayerProvider TRANSPARENT_TEXTURE = new RenderLayerProvider((texture) -> createGenericRenderLayer(texture.getNamespace(), "transparent_texture", VertexFormats.POSITION_COLOR_TEXTURE_LIGHT, VertexFormat.DrawMode.QUADS, RenderPhase.POSITION_COLOR_TEXTURE_LIGHTMAP_SHADER, RenderPhases.NORMAL_TRANSPARENCY, texture));
+	public static final RenderLayerProvider TRANSPARENT_TEXTURE = new RenderLayerProvider((texture) -> createGenericRenderLayer(texture.getNamespace(), "transparent_texture", VertexFormats.POSITION_COLOR_TEXTURE_LIGHT, VertexFormat.DrawMode.QUADS, RenderPhase.POSITION_COLOR_TEXTURE_LIGHTMAP_PROGRAM, RenderPhases.NORMAL_TRANSPARENCY, texture));
 	public static final RenderLayerProvider TRANSPARENT_TEXTURE_TRIANGLE = new RenderLayerProvider((texture) -> createGenericRenderLayer(texture.getNamespace(), "transparent_texture_triangle", VertexFormats.POSITION_COLOR_TEXTURE_LIGHT, VertexFormat.DrawMode.QUADS, LodestoneShaderRegistry.TRIANGLE_TEXTURE.phase, RenderPhases.NORMAL_TRANSPARENCY, texture));
 
 	public static final RenderLayerProvider ADDITIVE_TEXTURE = new RenderLayerProvider((texture) -> createGenericRenderLayer(texture.getNamespace(), "additive_texture", VertexFormats.POSITION_COLOR_TEXTURE_LIGHT, VertexFormat.DrawMode.QUADS, LodestoneShaderRegistry.ADDITIVE_TEXTURE.phase, RenderPhases.ADDITIVE_TRANSPARENCY, texture));
@@ -71,30 +70,30 @@ public class LodestoneRenderLayerRegistry extends RenderPhase {
 	/**
 	 * Creates a custom render type with a texture.
 	 */
-	public static RenderLayer createGenericRenderLayer(String modId, String name, VertexFormat format, VertexFormat.DrawMode mode, RenderPhase.Shader shader, RenderPhase.Transparency transparency, Identifier texture) {
+	public static RenderLayer createGenericRenderLayer(String modId, String name, VertexFormat format, VertexFormat.DrawMode mode, RenderPhase.ShaderProgram shader, RenderPhase.Transparency transparency, Identifier texture) {
 		return createGenericRenderLayer(modId + ":" + name, format, mode, shader, transparency, new RenderPhase.Texture(texture, false, false));
 	}
 	/**
 	 * Creates a custom render type with an empty texture state.
 	 */
-	public static RenderLayer createGenericRenderLayer(String modId, String name, VertexFormat format, VertexFormat.DrawMode mode, RenderPhase.Shader shader, RenderPhase.Transparency transparency, RenderPhase.TextureBase texture) {
+	public static RenderLayer createGenericRenderLayer(String modId, String name, VertexFormat format, VertexFormat.DrawMode mode, RenderPhase.ShaderProgram shader, RenderPhase.Transparency transparency, RenderPhase.TextureBase texture) {
 		return createGenericRenderLayer(modId + ":" + name, format, mode, shader, transparency, texture);
 	}
 
 	/**
 	 * Creates a custom render type with an empty texture.
 	 */
-	public static RenderLayer createGenericRenderLayer(String modId, String name, VertexFormat format, VertexFormat.DrawMode mode, RenderPhase.Shader shader, RenderPhase.Transparency transparency) {
+	public static RenderLayer createGenericRenderLayer(String modId, String name, VertexFormat format, VertexFormat.DrawMode mode, RenderPhase.ShaderProgram shader, RenderPhase.Transparency transparency) {
 		return createGenericRenderLayer(modId + ":" + name, format, mode, shader, transparency, RenderPhase.NO_TEXTURE);
 	}
 
 	/**
 	 * Creates a custom render type and creates a buffer builder for it.
 	 */
-	public static RenderLayer createGenericRenderLayer(String name, VertexFormat format, VertexFormat.DrawMode mode, RenderPhase.Shader shader, RenderPhase.Transparency transparency, RenderPhase.TextureBase texture) {
+	public static RenderLayer createGenericRenderLayer(String name, VertexFormat format, VertexFormat.DrawMode mode, RenderPhase.ShaderProgram shader, RenderPhase.Transparency transparency, RenderPhase.TextureBase texture) {
 		RenderLayer type = RenderLayer.of(
-				name, format, mode, QuiltLoader.isModLoaded("sodium") ? 262144 : 256, false, false, RenderLayer.MultiPhaseParameters.builder()
-						.shader(shader)
+				name, format, mode, FabricLoader.getInstance().isModLoaded("sodium") ? 262144 : 256, false, false, RenderLayer.MultiPhaseParameters.builder()
+						.program(shader)
 						.transparency(transparency)
 						.texture(texture)
 						.cull(new RenderPhase.Cull(true))
@@ -144,11 +143,11 @@ public class LodestoneRenderLayerRegistry extends RenderPhase {
 		public final String name;
 		public final VertexFormat format;
 		public final VertexFormat.DrawMode mode;
-		public final RenderPhase.Shader shader;
+		public final RenderPhase.ShaderProgram shader;
 		public RenderPhase.Transparency transparency = RenderPhases.ADDITIVE_TRANSPARENCY;
 		public final RenderPhase.TextureBase texture;
 
-		public RenderLayerData(String name, VertexFormat format, VertexFormat.DrawMode mode, RenderPhase.Shader shader, RenderPhase.TextureBase texture) {
+		public RenderLayerData(String name, VertexFormat format, VertexFormat.DrawMode mode, RenderPhase.ShaderProgram shader, RenderPhase.TextureBase texture) {
 			this.name = name;
 			this.format = format;
 			this.mode = mode;
@@ -156,13 +155,13 @@ public class LodestoneRenderLayerRegistry extends RenderPhase {
 			this.texture = texture;
 		}
 
-		public RenderLayerData(String name, VertexFormat format, VertexFormat.DrawMode mode, RenderPhase.Shader shader, RenderPhase.Transparency transparency, RenderPhase.TextureBase texture) {
+		public RenderLayerData(String name, VertexFormat format, VertexFormat.DrawMode mode, RenderPhase.ShaderProgram shader, RenderPhase.Transparency transparency, RenderPhase.TextureBase texture) {
 			this(name, format, mode, shader, texture);
 			this.transparency = transparency;
 		}
 
 		public RenderLayerData(RenderLayer.MultiPhase type) {
-			this(type.name, type.getVertexFormat(), type.getDrawMode(), type.phases.shader, type.phases.transparency, type.phases.texture);
+			this(type.name, type.getVertexFormat(), type.getDrawMode(), type.phases.program, type.phases.transparency, type.phases.texture);
 		}
 	}
 

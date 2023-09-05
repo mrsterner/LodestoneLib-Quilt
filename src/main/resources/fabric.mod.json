@@ -1,0 +1,47 @@
+{
+	"schemaVersion": 1,
+	"id": "lodestone",
+	"version": "${version}",
+	"name": "LodestoneLib",
+	"description": "Library for all of the Lodestone team's projects, now 10% more gay",
+	"authors": [
+		"Me!"
+	],
+	"contact": {
+		"homepage": "https://fabricmc.net/",
+		"sources": "https://github.com/FabricMC/fabric-example-mod"
+	},
+	"license": "CC0-1.0",
+	"icon": "assets/modid/icon.png",
+	"environment": "*",
+	"entrypoints": {
+		"main": [
+			"com.sammy.lodestone.LodestoneLib"
+		],
+		"client": [
+			"com.sammy.lodestone.LodestoneLibClient"
+		],
+		"cardinal-components-world": [
+			"com.sammy.lodestone.component.LodestoneComponents"
+		],
+		"cardinal-components-entity": [
+			"com.sammy.lodestone.component.LodestoneComponents"
+		]
+	},
+	"mixins": [
+		"lodestone.mixins.json"
+	],
+	"access_widener": "lodestone.accesswidener",
+	"depends": {
+		"fabricloader": ">=0.14.21",
+		"minecraft": "~1.20.1",
+		"java": ">=17",
+		"fabric-api": "*"
+	},
+  "custom": {
+    "cardinal-components": [
+      "lodestone:world_event",
+      "lodestone:player"
+    ]
+  }
+}

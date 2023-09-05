@@ -1,8 +1,8 @@
 package com.sammy.lodestone.helpers;
 
 import com.mojang.blaze3d.systems.RenderSystem;
-import com.mojang.blaze3d.vertex.*;
 import net.minecraft.client.MinecraftClient;
+import net.minecraft.client.gl.ShaderProgram;
 import net.minecraft.client.render.*;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.util.math.*;
@@ -17,7 +17,7 @@ public final class RenderHelper {
 	public static final int FULL_BRIGHT = 15728880;
 	public static ShaderProgram getShader(RenderLayer type) {
 		if (type instanceof RenderLayer.MultiPhase compositeRenderType) {
-			Optional<Supplier<ShaderProgram>> shader = compositeRenderType.phases.shader.supplier;
+			Optional<Supplier<ShaderProgram>> shader = compositeRenderType.phases.program.supplier;
 			if (shader.isPresent()) {
 				return shader.get().get();
 			}
@@ -37,11 +37,11 @@ public final class RenderHelper {
 	}
 
 	public static void vertexPosUV(VertexConsumer vertexConsumer, Matrix4f last, float x, float y, float z, float u, float v) {
-		vertexConsumer.vertex(last, x, y, z).uv(u, v).next();
+		vertexConsumer.vertex(last, x, y, z).texture(u, v).next();
 	}
 
 	public static void vertexPosUVLight(VertexConsumer vertexConsumer, Matrix4f last, float x, float y, float z, float u, float v, int light) {
-		vertexConsumer.vertex(last, x, y, z).uv(u, v).light(light).next();
+		vertexConsumer.vertex(last, x, y, z).texture(u, v).light(light).next();
 	}
 
 	public static void vertexPosColor(VertexConsumer vertexConsumer, Matrix4f last, float x, float y, float z, float r, float g, float b, float a) {
@@ -49,11 +49,11 @@ public final class RenderHelper {
 	}
 
 	public static void vertexPosColorUV(VertexConsumer vertexConsumer, Matrix4f last, float x, float y, float z, float r, float g, float b, float a, float u, float v) {
-		vertexConsumer.vertex(last, x, y, z).color(r, g, b, a).uv(u, v).next();
+		vertexConsumer.vertex(last, x, y, z).color(r, g, b, a).texture(u, v).next();
 	}
 
 	public static void vertexPosColorUVLight(VertexConsumer vertexConsumer, Matrix4f last, float x, float y, float z, float r, float g, float b, float a, float u, float v, int light) {
-		vertexConsumer.vertex(last, x, y, z).color(r, g, b, a).uv(u, v).light(light).next();
+		vertexConsumer.vertex(last, x, y, z).color(r, g, b, a).texture(u, v).light(light).next();
 	}
 
 	public static Vector3f parametricSphere(float u, float v, float r) {
@@ -88,7 +88,7 @@ public final class RenderHelper {
 	}
 
 	public static Vec2f worldPosToTexCoord(Vector3f worldPos, MatrixStack viewModelStack) {
-		Matrix4f viewMat = viewModelStack.peek().getModel();
+		Matrix4f viewMat = viewModelStack.peek().getPositionMatrix();
 		Matrix4f projMat = RenderSystem.getProjectionMatrix();
 
 		Vector3f localPos = new Vector3f(worldPos);

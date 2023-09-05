@@ -13,7 +13,7 @@ public class HorizontalDirectionStructure extends MultiBlockStructure {
 
 	@Override
 	public void place(ItemPlacementContext context) {
-		structurePieces.forEach(s -> s.place(context.getBlockPos(), context.getWorld(), s.state.with(Properties.HORIZONTAL_FACING, context.getPlayerFacing().getOpposite())));
+		structurePieces.forEach(s -> s.place(context.getBlockPos(), context.getWorld(), s.state.with(Properties.HORIZONTAL_FACING, context.getHorizontalPlayerFacing().getOpposite())));
 	}
 
 

@@ -46,8 +46,8 @@ public class LodestoneBlockEntity extends BlockEntity   {
 	}
 
 	@Override
-	public NbtCompound toSyncedNbt() {
-		NbtCompound tag = super.toSyncedNbt();
+	public NbtCompound toInitialChunkDataNbt() {
+		NbtCompound tag = super.toInitialChunkDataNbt();
 		this.writeNbt(tag);
 		return tag;
 	}
@@ -75,7 +75,7 @@ public class LodestoneBlockEntity extends BlockEntity   {
 
 	@Override
 	public BlockEntityUpdateS2CPacket toUpdatePacket() {
-		return BlockEntityUpdateS2CPacket.of(this);
+		return BlockEntityUpdateS2CPacket.create(this);
 	}
 
 	/**

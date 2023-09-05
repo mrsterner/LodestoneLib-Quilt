@@ -1,6 +1,5 @@
 package com.sammy.lodestone.systems.particle.world;
 
-import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.sammy.lodestone.config.ClientConfig;
 import com.sammy.lodestone.handlers.RenderHandler;
 import com.sammy.lodestone.helpers.RenderHelper;
@@ -12,8 +11,9 @@ import net.fabricmc.fabric.impl.client.particle.FabricSpriteProviderImpl;
 import net.minecraft.client.particle.ParticleTextureSheet;
 import net.minecraft.client.particle.SpriteBillboardParticle;
 import net.minecraft.client.render.Camera;
-import net.minecraft.client.util.ColorUtil;
+import net.minecraft.client.render.VertexConsumer;
 import net.minecraft.client.world.ClientWorld;
+import net.minecraft.util.math.ColorHelper;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
 
@@ -122,9 +122,9 @@ public class GenericParticle extends SpriteBillboardParticle {
 		float s = MathHelper.lerp(colorCoeff, hsv1[1], hsv2[1]);
 		float v = MathHelper.lerp(colorCoeff, hsv1[2], hsv2[2]);
 		int packed = Color.HSBtoRGB(h, s, v);
-		float r = ColorUtil.ARGB32.getRed(packed) / 255.0f;
-		float g = ColorUtil.ARGB32.getGreen(packed) / 255.0f;
-		float b = ColorUtil.ARGB32.getBlue(packed) / 255.0f;
+		float r = ColorHelper.Argb.getRed(packed) / 255.0f;
+		float g = ColorHelper.Argb.getGreen(packed) / 255.0f;
+		float b = ColorHelper.Argb.getBlue(packed) / 255.0f;
 		setColor(r, g, b);
 	}
 
@@ -137,13 +137,13 @@ public class GenericParticle extends SpriteBillboardParticle {
 			}
 		}
 		if (shouldAttemptRemoval) {
-			if ((reachedPositiveAlpha && colorAlpha <= 0) || (reachedPositiveScale && scale <= 0)) {
+			if ((reachedPositiveAlpha && alpha <= 0) || (reachedPositiveScale && scale <= 0)) {
 				markDead();
 				return;
 			}
 		}
 
-		if (!reachedPositiveAlpha && colorAlpha > 0) {
+		if (!reachedPositiveAlpha && alpha > 0) {
 			reachedPositiveAlpha = true;
 		}
 		if (!reachedPositiveScale && scale > 0) {
@@ -152,7 +152,7 @@ public class GenericParticle extends SpriteBillboardParticle {
 		pickColor(colorData.colorCurveEasing.ease(colorData.getProgress(age, maxAge), 0, 1, 1));
 
 		scale = scaleData.getValue(age, maxAge);
-		colorAlpha = transparencyData.getValue(age, maxAge);
+		alpha = transparencyData.getValue(age, maxAge);
 		prevAngle = angle;
 		angle += spinData.getValue(age, maxAge);
 

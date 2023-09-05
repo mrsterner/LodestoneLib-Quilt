@@ -2,7 +2,7 @@ package com.sammy.lodestone.mixin;
 
 import com.sammy.lodestone.systems.rendering.shader.ExtendedShader;
 import net.fabricmc.fabric.impl.client.rendering.FabricShaderProgram;
-import net.minecraft.client.render.ShaderProgram;
+import net.minecraft.client.gl.ShaderProgram;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;

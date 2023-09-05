@@ -1,16 +1,15 @@
 package com.sammy.lodestone.handlers;
 
-import com.mojang.blaze3d.shader.FogShape;
 import com.mojang.blaze3d.systems.RenderSystem;
-import com.mojang.blaze3d.vertex.BufferBuilder;
 import com.sammy.lodestone.helpers.RenderHelper;
 import com.sammy.lodestone.systems.rendering.shader.ExtendedShader;
 import com.sammy.lodestone.systems.rendering.renderlayer.ShaderUniformHandler;
+import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.client.MinecraftClient;
+import net.minecraft.client.gl.ShaderProgram;
 import net.minecraft.client.render.*;
 import net.minecraft.client.util.math.MatrixStack;
 import org.joml.Matrix4f;
-import org.quiltmc.loader.api.QuiltLoader;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -21,7 +20,7 @@ import static com.sammy.lodestone.systems.rendering.RenderPhases.NORMAL_TRANSPAR
 public class RenderHandler {
 	public static HashMap<RenderLayer, BufferBuilder> BUFFERS = new HashMap<>();
 	public static HashMap<RenderLayer, BufferBuilder> PARTICLE_BUFFERS = new HashMap<>();
-	public static boolean LARGER_BUFFER_SOURCES = QuiltLoader.isModLoaded("sodium");
+	public static boolean LARGER_BUFFER_SOURCES = FabricLoader.getInstance().isModLoaded("sodium");
 
 	public static HashMap<RenderLayer, ShaderUniformHandler> UNIFORM_HANDLERS = new HashMap<>();
 	public static VertexConsumerProvider.Immediate DELAYED_RENDER;

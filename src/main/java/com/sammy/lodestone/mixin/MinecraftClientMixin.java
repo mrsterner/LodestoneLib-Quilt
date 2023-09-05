@@ -33,7 +33,7 @@ abstract class MinecraftClientMixin {
 	@Final
 	private RenderTickCounter renderTickCounter;
 
-	@Inject(method = "<init>", at = @At(value = "INVOKE", target = "Lnet/minecraft/resource/ReloadableResourceManager;registerReloader(Lnet/minecraft/resource/ResourceReloader;)V", ordinal = 17))
+	@Inject(method = "<init>", at = @At(value = "INVOKE", target = "Lnet/minecraft/resource/ReloadableResourceManagerImpl;registerReloader(Lnet/minecraft/resource/ResourceReloader;)V", ordinal = 17))
 	private void lodestone$registerParticleFactories(RunArgs runArgs, CallbackInfo ci) {
 		LodestoneParticleRegistry.registerFactories();
 		LodestoneScreenParticleRegistry.registerParticleFactories();

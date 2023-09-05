@@ -2,7 +2,6 @@ package com.sammy.lodestone.helpers;
 
 
 import com.sammy.lodestone.systems.easing.Easing;
-import net.minecraft.client.util.ColorUtil;
 import net.minecraft.util.math.MathHelper;
 
 import java.awt.*;
@@ -10,9 +9,9 @@ import java.util.List;
 
 public class ColorHelper {
 	public static Color getColor(int decimal) {
-		int red = ColorUtil.ARGB32.getRed(decimal);
-		int green = ColorUtil.ARGB32.getGreen(decimal);
-		int blue = ColorUtil.ARGB32.getBlue(decimal);
+		int red = net.minecraft.util.math.ColorHelper.Argb.getRed(decimal);
+		int green = net.minecraft.util.math.ColorHelper.Argb.getGreen(decimal);
+		int blue = net.minecraft.util.math.ColorHelper.Argb.getBlue(decimal);
 		return new Color(red, green, blue);
 	}
 
@@ -21,19 +20,19 @@ public class ColorHelper {
 	}
 
 	public static int getColor(Color color) {
-		return ColorUtil.ARGB32.getArgb(color.getAlpha(), color.getRed(), color.getGreen(), color.getBlue());
+		return net.minecraft.util.math.ColorHelper.Argb.getArgb(color.getAlpha(), color.getRed(), color.getGreen(), color.getBlue());
 	}
 
 	public static int getColor(int r, int g, int b) {
-		return ColorUtil.ARGB32.getArgb(255, r, g, b);
+		return net.minecraft.util.math.ColorHelper.Argb.getArgb(255, r, g, b);
 	}
 
 	public static int getColor(int r, int g, int b, int a) {
-		return ColorUtil.ARGB32.getArgb(a, r, g, b);
+		return net.minecraft.util.math.ColorHelper.Argb.getArgb(a, r, g, b);
 	}
 
 	public static int getColor(float r, float g, float b, float a) {
-		return ColorUtil.ARGB32.getArgb((int) (a * 255f), (int) (r * 255f), (int) (g * 255f), (int) (b * 255f));
+		return net.minecraft.util.math.ColorHelper.Argb.getArgb((int) (a * 255f), (int) (r * 255f), (int) (g * 255f), (int) (b * 255f));
 	}
 
 	public static Color colorLerp(Easing easing, float pct, Color startColor, Color endColor) {

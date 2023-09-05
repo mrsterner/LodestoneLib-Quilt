@@ -8,7 +8,7 @@ import java.util.List;
 
 /**
  * Handles world-space post-processing.
- * Based on vanilla {@link net.minecraft.client.gl.ShaderEffect} system, but allows the shader to access the world depth buffer.
+ * Based on vanilla {@link net.minecraft.client.gl.ShaderProgram} system, but allows the shader to access the world depth buffer.
  */
 public class PostProcessHandler {
 	private static final List<PostProcessor> instances = new ArrayList<>();

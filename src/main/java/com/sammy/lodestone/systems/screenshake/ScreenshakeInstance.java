@@ -3,7 +3,7 @@ package com.sammy.lodestone.systems.screenshake;
 import com.sammy.lodestone.systems.easing.Easing;
 import net.minecraft.client.render.Camera;
 import net.minecraft.util.math.MathHelper;
-import net.minecraft.util.random.RandomGenerator;
+import net.minecraft.util.math.random.Random;
 
 
 public class ScreenshakeInstance {
@@ -41,7 +41,7 @@ public class ScreenshakeInstance {
 		return this;
 	}
 
-	public float updateIntensity(Camera camera, RandomGenerator random) {
+	public float updateIntensity(Camera camera, Random random) {
 		progress++;
 		float percentage = progress / (float) duration;
 		if (intensity2 != intensity3) {

@@ -1,11 +1,12 @@
 package com.sammy.lodestone.systems.rendering.renderlayer;
 
-import net.minecraft.client.render.ShaderProgram;
+
+import net.minecraft.client.gl.ShaderProgram;
 
 public interface ShaderUniformHandler {
 
 	ShaderUniformHandler LUMITRANSPARENT = instance -> {
-		instance.getUniformOrDefault("LumiTransparency").setInt(1);
+		instance.getUniformOrDefault("LumiTransparency").set(1);
 	};
 
 	void updateShaderData(ShaderProgram instance);

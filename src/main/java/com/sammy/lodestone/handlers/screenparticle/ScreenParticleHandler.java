@@ -1,8 +1,6 @@
 package com.sammy.lodestone.handlers.screenparticle;
 
 
-
-import com.mojang.blaze3d.vertex.Tessellator;
 import com.mojang.datafixers.util.Pair;
 import com.sammy.lodestone.config.ClientConfig;
 import com.sammy.lodestone.systems.particle.screen.LodestoneScreenParticleTextureSheet;
@@ -13,6 +11,7 @@ import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.screen.ChatScreen;
 import net.minecraft.client.gui.screen.GameModeSelectionScreen;
 import net.minecraft.client.gui.screen.Screen;
+import net.minecraft.client.render.Tessellator;
 import net.minecraft.item.ItemStack;
 
 import java.util.*;
@@ -130,9 +129,9 @@ public class ScreenParticleHandler {
 			return;
 		}
 		screenParticleTarget.forEach((renderType, particles) -> {
-			renderType.begin(TESSELATOR.getBufferBuilder(), MinecraftClient.getInstance().getTextureManager());
+			renderType.begin(TESSELATOR.getBuffer(), MinecraftClient.getInstance().getTextureManager());
 			for (ScreenParticle next : particles) {
-				next.render(TESSELATOR.getBufferBuilder());
+				next.render(TESSELATOR.getBuffer());
 			}
 			renderType.draw(TESSELATOR);
 		});

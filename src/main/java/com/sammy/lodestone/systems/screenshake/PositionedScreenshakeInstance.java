@@ -3,7 +3,7 @@ package com.sammy.lodestone.systems.screenshake;
 import com.sammy.lodestone.systems.easing.Easing;
 import net.minecraft.client.render.Camera;
 import net.minecraft.util.math.Vec3d;
-import net.minecraft.util.random.RandomGenerator;
+import net.minecraft.util.math.random.Random;
 import org.joml.Vector3f;
 
 public class PositionedScreenshakeInstance extends ScreenshakeInstance{
@@ -23,7 +23,7 @@ public class PositionedScreenshakeInstance extends ScreenshakeInstance{
 	}
 
 	@Override
-	public float updateIntensity(Camera camera, RandomGenerator random) {
+	public float updateIntensity(Camera camera, Random random) {
 		float intensity = super.updateIntensity(camera, random);
 		float distance = (float) position.distanceTo(camera.getPos());
 		if (distance > maxDistance) {

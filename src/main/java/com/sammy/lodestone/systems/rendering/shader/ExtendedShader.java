@@ -3,14 +3,14 @@ package com.sammy.lodestone.systems.rendering.shader;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
-import com.mojang.blaze3d.shader.GlUniform;
-import com.mojang.blaze3d.shader.Uniform;
-import com.mojang.blaze3d.vertex.VertexFormat;
 import com.sammy.lodestone.systems.rendering.UniformData;
-import net.minecraft.client.gl.ShaderParseException;
-import net.minecraft.client.render.ShaderProgram;
+import net.minecraft.client.gl.GlUniform;
+import net.minecraft.client.gl.ShaderProgram;
+import net.minecraft.client.gl.Uniform;
+import net.minecraft.client.render.VertexFormat;
 import net.minecraft.resource.ResourceFactory;
 import net.minecraft.util.Identifier;
+import net.minecraft.util.InvalidHierarchicalFileException;
 import net.minecraft.util.JsonHelper;
 
 import java.io.IOException;
@@ -44,7 +44,7 @@ public class ExtendedShader extends ShaderProgram {
 	}
 
 	@Override
-	public void addUniform(JsonElement pJson) throws ShaderParseException {
+	public void addUniform(JsonElement pJson) throws InvalidHierarchicalFileException {
 		if (getHolder().uniforms.isEmpty()) {
 			super.addUniform(pJson);
 			return;
@@ -56,7 +56,7 @@ public class ExtendedShader extends ShaderProgram {
 		float[] afloat = new float[Math.max(j, 16)];
 		JsonArray jsonarray = JsonHelper.getArray(jsonobject, "values");
 		if (jsonarray.size() != j && jsonarray.size() > 1) {
-			throw new ShaderParseException("Invalid amount of values specified (expected " + j + ", found " + jsonarray.size() + ")");
+			throw new InvalidHierarchicalFileException("Invalid amount of values specified (expected " + j + ", found " + jsonarray.size() + ")");
 		} else {
 			int k = 0;
 
@@ -64,8 +64,8 @@ public class ExtendedShader extends ShaderProgram {
 				try {
 					afloat[k] = JsonHelper.asFloat(jsonelement, "value");
 				} catch (Exception exception) {
-					ShaderParseException chainedjsonexception = ShaderParseException.wrap(exception);
-					chainedjsonexception.addFaultyElement("values[" + k + "]");
+					InvalidHierarchicalFileException chainedjsonexception = InvalidHierarchicalFileException.wrap(exception);
+					chainedjsonexception.addInvalidKey("values[" + k + "]");
 					throw chainedjsonexception;
 				}
 
@@ -89,7 +89,7 @@ public class ExtendedShader extends ShaderProgram {
 			} else if (i <= 7) {
 				uniform.setForDataType(afloat[0], afloat[1], afloat[2], afloat[3]);
 			} else {
-				uniform.setFloats(Arrays.copyOfRange(afloat, 0, j));
+				uniform.set(Arrays.copyOfRange(afloat, 0, j));
 			}
 			if (i > 3) {
 				if (getHolder().uniforms.contains(name)) {

@@ -1,11 +1,11 @@
 package com.sammy.lodestone.setup;
 
-import com.mojang.blaze3d.vertex.VertexFormats;
 import com.mojang.datafixers.util.Pair;
 import com.sammy.lodestone.LodestoneLib;
 import com.sammy.lodestone.systems.rendering.shader.ExtendedShader;
 import com.sammy.lodestone.systems.rendering.shader.ShaderHolder;
-import net.minecraft.client.render.ShaderProgram;
+import net.minecraft.client.gl.ShaderProgram;
+import net.minecraft.client.render.VertexFormats;
 import net.minecraft.resource.ResourceFactory;
 
 import java.io.IOException;

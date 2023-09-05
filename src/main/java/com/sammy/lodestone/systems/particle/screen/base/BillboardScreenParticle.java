@@ -1,7 +1,7 @@
 package com.sammy.lodestone.systems.particle.screen.base;
 
-import com.mojang.blaze3d.vertex.BufferBuilder;
 import net.minecraft.client.MinecraftClient;
+import net.minecraft.client.render.BufferBuilder;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
 import org.joml.Quaternionf;
@@ -35,10 +35,10 @@ public abstract class BillboardScreenParticle extends ScreenParticle {
 			vector3f.add((float) x, (float) y, 0);
 		}
 		float quadZ = getQuadZPosition();
-		bufferBuilder.vertex(vectors[0].x(), vectors[0].y(), quadZ).uv(u1, v1).color(this.red, this.green, this.blue, this.alpha).next();
-		bufferBuilder.vertex(vectors[1].x(), vectors[1].y(), quadZ).uv(u1, v0).color(this.red, this.green, this.blue, this.alpha).next();
-		bufferBuilder.vertex(vectors[2].x(), vectors[2].y(), quadZ).uv(u0, v0).color(this.red, this.green, this.blue, this.alpha).next();
-		bufferBuilder.vertex(vectors[3].x(), vectors[3].y(), quadZ).uv(u0, v1).color(this.red, this.green, this.blue, this.alpha).next();
+		bufferBuilder.vertex(vectors[0].x(), vectors[0].y(), quadZ).texture(u1, v1).color(this.red, this.green, this.blue, this.alpha).next();
+		bufferBuilder.vertex(vectors[1].x(), vectors[1].y(), quadZ).texture(u1, v0).color(this.red, this.green, this.blue, this.alpha).next();
+		bufferBuilder.vertex(vectors[2].x(), vectors[2].y(), quadZ).texture(u0, v0).color(this.red, this.green, this.blue, this.alpha).next();
+		bufferBuilder.vertex(vectors[3].x(), vectors[3].y(), quadZ).texture(u0, v1).color(this.red, this.green, this.blue, this.alpha).next();
     }
 
     public float getQuadSize(float tickDelta) {

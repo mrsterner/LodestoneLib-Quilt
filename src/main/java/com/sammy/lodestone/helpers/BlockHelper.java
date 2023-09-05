@@ -10,7 +10,7 @@ import net.minecraft.state.property.Property;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Box;
 import net.minecraft.util.math.Vec3d;
-import net.minecraft.util.random.RandomGenerator;
+import net.minecraft.util.math.random.Random;
 import net.minecraft.world.World;
 import net.minecraft.world.chunk.Chunk;
 
@@ -469,7 +469,7 @@ public class BlockHelper {
 	 * @param pos the position the block is centered around
 	 * @return The randomized vector position
 	 */
-	public static Vec3d withinBlock(RandomGenerator rand, BlockPos pos) {
+	public static Vec3d withinBlock(Random rand, BlockPos pos) {
 		double x = pos.getX() + rand.nextDouble();
 		double y = pos.getY() + rand.nextDouble();
 		double z = pos.getZ() + rand.nextDouble();
