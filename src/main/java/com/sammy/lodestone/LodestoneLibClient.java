@@ -8,6 +8,7 @@ import com.sammy.lodestone.network.SyncWorldEventPacket;
 import com.sammy.lodestone.network.screenshake.PositionedScreenshakePacket;
 import com.sammy.lodestone.network.screenshake.ScreenshakePacket;
 import com.sammy.lodestone.setup.LodestoneRenderLayerRegistry;
+import com.sammy.lodestone.setup.LodestoneRenderWorldEvent;
 import eu.midnightdust.lib.config.MidnightConfig;
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
@@ -17,8 +18,6 @@ import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.render.Camera;
 import net.minecraft.client.render.WorldRenderer;
 import net.minecraft.client.util.math.MatrixStack;
-import net.minecraft.util.TimeHelper;
-import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
 import org.joml.Matrix4f;
 
@@ -33,19 +32,19 @@ public class LodestoneLibClient implements ClientModInitializer {
 		RenderHandler.init();
 		ParticleEmitterHandler.registerParticleEmitters();
 
-		WorldRenderEvents.AFTER_TRANSLUCENT.register(context -> {
+		LodestoneRenderWorldEvent.AFTER_PARTICLES.register((matrixStack, mat) -> {
 			MinecraftClient minecraft = MinecraftClient.getInstance();
 			Camera camera = minecraft.gameRenderer.getCamera();
 			Vec3d cameraPos = camera.getPos();
-			MatrixStack poseStack = context.matrixStack();
-			poseStack.push();
-			poseStack.translate(-cameraPos.getX(), -cameraPos.getY(), -cameraPos.getZ());
-
+			matrixStack.push();
+			matrixStack.translate(-cameraPos.getX(), -cameraPos.getY(), -cameraPos.getZ());
 			RenderHandler.MATRIX4F = new Matrix4f(RenderSystem.getModelViewMatrix());
 
-			poseStack.pop();
+			matrixStack.pop();
 		});
-		WorldRenderEvents.END.register(this::renderLast);
+
+		WorldRenderEvents.LAST.register(this::renderLast);
+		LodestoneRenderWorldEvent.AFTER_WEATHER.register(this::renderWeather);
 
 
 		ClientPlayNetworking.registerGlobalReceiver(ScreenshakePacket.ID, (client, handler, buf, responseSender) -> new ScreenshakePacket(buf).apply(client.getNetworkHandler()));
@@ -53,20 +52,18 @@ public class LodestoneLibClient implements ClientModInitializer {
 		ClientPlayNetworking.registerGlobalReceiver(SyncWorldEventPacket.ID, SyncWorldEventPacket::handle);
 	}
 
-	private void renderLast(WorldRenderContext worldRenderContext) {
+	private void renderWeather(MatrixStack matrixStack, Matrix4f matrix4f, WorldRenderer worldRenderer) {
 		MinecraftClient minecraft = MinecraftClient.getInstance();
 		Camera camera = minecraft.gameRenderer.getCamera();
 		Vec3d cameraPos = camera.getPos();
-		MatrixStack poseStack = worldRenderContext.matrixStack();
-        WorldRenderer levelRenderer = worldRenderContext.worldRenderer();
-		poseStack.push();
-		poseStack.translate(-cameraPos.getX(), -cameraPos.getY(), -cameraPos.getZ());
+		matrixStack.push();
+		matrixStack.translate(-cameraPos.getX(), -cameraPos.getY(), -cameraPos.getZ());
 
 		Matrix4f last = new Matrix4f(RenderSystem.getModelViewMatrix());
-		if (levelRenderer.transparencyPostProcessor != null) {
+		if (worldRenderer.transparencyPostProcessor != null) {
 			MinecraftClient.getInstance().getFramebuffer().beginWrite(false);
 		}
-		RenderHandler.beginBufferedRendering(poseStack);
+		RenderHandler.beginBufferedRendering(matrixStack);
 		RenderHandler.renderBufferedParticles(true);
 		if (RenderHandler.MATRIX4F != null) {
 			RenderSystem.getModelViewMatrix().set(RenderHandler.MATRIX4F);
@@ -76,11 +73,15 @@ public class LodestoneLibClient implements ClientModInitializer {
 		RenderSystem.getModelViewMatrix().set(last);
 		RenderHandler.renderBufferedParticles(false);
 
-		RenderHandler.endBufferedRendering(poseStack);
-		if (levelRenderer.transparencyPostProcessor != null) {
-			levelRenderer.getCloudsFramebuffer().beginWrite(false);
+		RenderHandler.endBufferedRendering(matrixStack);
+		if (worldRenderer.transparencyPostProcessor != null) {
+			worldRenderer.getCloudsFramebuffer().beginWrite(false);
 		}
 
-		poseStack.pop();
+		matrixStack.pop();
+	}
+
+	private void renderLast(WorldRenderContext worldRenderContext) {
+
 	}
 }

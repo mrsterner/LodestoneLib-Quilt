@@ -26,7 +26,6 @@ public interface LodestoneWorldParticleTextureSheet extends ParticleTextureSheet
 			RenderSystem.blendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE);
 			RenderSystem.setShader(LodestoneShaderRegistry.PARTICLE.getInstance());
 			RenderSystem.setShaderTexture(0, SpriteAtlasTexture.PARTICLE_ATLAS_TEXTURE);
-			RenderHandler.MATRIX4F = RenderSystem.getModelViewMatrix();
 			builder.begin(VertexFormat.DrawMode.QUADS, VertexFormats.POSITION_TEXTURE_COLOR_LIGHT);
 		}
 
@@ -52,7 +51,6 @@ public interface LodestoneWorldParticleTextureSheet extends ParticleTextureSheet
 			RenderSystem.blendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
 			RenderSystem.setShader(LodestoneShaderRegistry.PARTICLE.getInstance());
 			RenderSystem.setShaderTexture(0, SpriteAtlasTexture.PARTICLE_ATLAS_TEXTURE);
-			RenderHandler.MATRIX4F = RenderSystem.getModelViewMatrix();
 			builder.begin(VertexFormat.DrawMode.QUADS, VertexFormats.POSITION_TEXTURE_COLOR_LIGHT);
 		}
 
