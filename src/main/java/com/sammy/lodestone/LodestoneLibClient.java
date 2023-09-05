@@ -33,19 +33,10 @@ public class LodestoneLibClient implements ClientModInitializer {
 		ParticleEmitterHandler.registerParticleEmitters();
 
 		LodestoneRenderWorldEvent.AFTER_PARTICLES.register((matrixStack, mat) -> {
-			MinecraftClient minecraft = MinecraftClient.getInstance();
-			Camera camera = minecraft.gameRenderer.getCamera();
-			Vec3d cameraPos = camera.getPos();
-			matrixStack.push();
-			matrixStack.translate(-cameraPos.getX(), -cameraPos.getY(), -cameraPos.getZ());
 			RenderHandler.MATRIX4F = new Matrix4f(RenderSystem.getModelViewMatrix());
-
-			matrixStack.pop();
 		});
 
-		WorldRenderEvents.LAST.register(this::renderLast);
 		LodestoneRenderWorldEvent.AFTER_WEATHER.register(this::renderWeather);
-
 
 		ClientPlayNetworking.registerGlobalReceiver(ScreenshakePacket.ID, (client, handler, buf, responseSender) -> new ScreenshakePacket(buf).apply(client.getNetworkHandler()));
 		ClientPlayNetworking.registerGlobalReceiver(PositionedScreenshakePacket.ID, (client, handler, buf, responseSender) -> PositionedScreenshakePacket.fromBuf(buf).apply(client.getNetworkHandler()));
@@ -79,9 +70,5 @@ public class LodestoneLibClient implements ClientModInitializer {
 		}
 
 		matrixStack.pop();
-	}
-
-	private void renderLast(WorldRenderContext worldRenderContext) {
-
 	}
 }
