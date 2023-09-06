@@ -9,6 +9,9 @@ public class ScreenParticleEffect extends SimpleParticleEffect {
 	public LodestoneScreenParticleTextureSheet renderType = LodestoneScreenParticleTextureSheet.ADDITIVE;
 	public Consumer<GenericScreenParticle> actor;
 
+	public boolean tracksStack;
+	public double stackTrackXOffset;
+	public double stackTrackYOffset;
 
 	public ScreenParticleEffect(ScreenParticleType<?> type) {
         this.type = type;

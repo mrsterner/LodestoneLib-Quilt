@@ -32,3 +32,4 @@ accessible field net/minecraft/client/render/RenderPhase$ShaderProgram supplier 
 accessible field net/minecraft/item/ArmorItem attributeModifiers Lcom/google/common/collect/Multimap;
 accessible field net/minecraft/item/SwordItem attributeModifiers Lcom/google/common/collect/Multimap;
 accessible method net/minecraft/enchantment/EnchantmentHelper forEachEnchantment (Lnet/minecraft/enchantment/EnchantmentHelper$Consumer;Ljava/lang/Iterable;)V
+accessible field net/minecraft/client/MinecraftClient renderTickCounter Lnet/minecraft/client/render/RenderTickCounter;

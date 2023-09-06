@@ -4,10 +4,7 @@ import com.sammy.lodestone.handlers.screenparticle.ScreenParticleHandler;
 import com.sammy.lodestone.systems.particle.data.ColorParticleData;
 import com.sammy.lodestone.systems.particle.data.GenericParticleData;
 import com.sammy.lodestone.systems.particle.data.SpinParticleData;
-import com.sammy.lodestone.systems.particle.screen.GenericScreenParticle;
-import com.sammy.lodestone.systems.particle.screen.LodestoneScreenParticleTextureSheet;
-import com.sammy.lodestone.systems.particle.screen.ScreenParticleEffect;
-import com.sammy.lodestone.systems.particle.screen.ScreenParticleType;
+import com.sammy.lodestone.systems.particle.screen.*;
 import com.sammy.lodestone.systems.particle.screen.base.ScreenParticle;
 
 import java.util.ArrayList;
@@ -21,17 +18,17 @@ public class ScreenParticleBuilder {
 
 	final ScreenParticleType<?> type;
 	final ScreenParticleEffect options;
-	final HashMap<LodestoneScreenParticleTextureSheet, ArrayList<ScreenParticle>> target;
+	final ScreenParticleHolder target;
 
 	double xMotion = 0, yMotion = 0;
 	double maxXSpeed = 0, maxYSpeed = 0;
 	double maxXOffset = 0, maxYOffset = 0;
 
-	public static ScreenParticleBuilder create(ScreenParticleType<?> type, HashMap<LodestoneScreenParticleTextureSheet, ArrayList<ScreenParticle>> target) {
+	public static ScreenParticleBuilder create(ScreenParticleType<?> type, ScreenParticleHolder target) {
 		return new ScreenParticleBuilder(type, target);
 	}
 
-	protected ScreenParticleBuilder(ScreenParticleType<?> type, HashMap<LodestoneScreenParticleTextureSheet, ArrayList<ScreenParticle>> target) {
+	protected ScreenParticleBuilder(ScreenParticleType<?> type, ScreenParticleHolder target) {
 		this.type = type;
 		this.options = new ScreenParticleEffect(type);
 		this.target = target;
@@ -138,6 +135,19 @@ public class ScreenParticleBuilder {
 
 	public ScreenParticleBuilder repeat(double x, double y, int n) {
 		for (int i = 0; i < n; i++) spawn(x, y);
+		return this;
+	}
+
+	public ScreenParticleBuilder spawnOnStack(double xOffset, double yOffset) {
+		options.tracksStack = true;
+		options.stackTrackXOffset = xOffset;
+		options.stackTrackYOffset = yOffset;
+		spawn(ScreenParticleHandler.currentItemX+xOffset, ScreenParticleHandler.currentItemY+yOffset);
+		return this;
+	}
+
+	public ScreenParticleBuilder repeatOnStack(double xOffset, double yOffset, int n) {
+		for (int i = 0; i < n; i++) spawn(xOffset, yOffset);
 		return this;
 	}
 }

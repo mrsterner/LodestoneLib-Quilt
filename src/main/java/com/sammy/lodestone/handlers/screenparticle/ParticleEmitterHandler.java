@@ -2,6 +2,7 @@ package com.sammy.lodestone.handlers.screenparticle;
 
 import com.sammy.lodestone.helpers.DataHelper;
 import com.sammy.lodestone.systems.particle.screen.LodestoneScreenParticleTextureSheet;
+import com.sammy.lodestone.systems.particle.screen.ScreenParticleHolder;
 import com.sammy.lodestone.systems.particle.screen.base.ScreenParticle;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -34,6 +35,7 @@ public class ParticleEmitterHandler {
 	}
 
 	public interface ItemParticleSupplier {
-		void spawnParticles(HashMap<LodestoneScreenParticleTextureSheet, ArrayList<ScreenParticle>> target, World world, float partialTick, ItemStack stack);
+		default void spawnEarlyParticles(ScreenParticleHolder target, World level, float partialTick, ItemStack stack, float x, float y) {}
+		default void spawnLateParticles(ScreenParticleHolder target, World level, float partialTick, ItemStack stack, float x, float y) {}
 	}
 }
