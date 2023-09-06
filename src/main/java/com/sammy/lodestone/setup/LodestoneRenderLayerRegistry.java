@@ -164,6 +164,8 @@ public class LodestoneRenderLayerRegistry extends RenderPhase {
 		public RenderLayerData(RenderLayer.MultiPhase type) {
 			this(type.name, type.getVertexFormat(), type.getDrawMode(), type.phases.program, type.phases.transparency, type.phases.texture);
 		}
+
+
 	}
 
 	public static class RenderLayerProvider {
