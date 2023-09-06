@@ -53,7 +53,7 @@ dependencies {
 	modImplementation "dev.onyxstudios.cardinal-components-api:cardinal-components-base:${project.cca}"
 	modImplementation "dev.onyxstudios.cardinal-components-api:cardinal-components-entity:${project.cca}"
 	modImplementation "dev.onyxstudios.cardinal-components-api:cardinal-components-world:${project.cca}"
-
+	include("io.github.ladysnake:satin:${project.satin_version}")
 	include(implementation(annotationProcessor("io.github.llamalad7:mixinextras-fabric:0.2.0-rc.2")))
 	modImplementation include("io.github.fabricators_of_create.Porting-Lib:core:2.1.1127+1.20")
 }
