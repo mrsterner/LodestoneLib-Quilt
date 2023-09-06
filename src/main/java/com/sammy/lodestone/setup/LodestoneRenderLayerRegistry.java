@@ -5,6 +5,7 @@ import com.sammy.lodestone.handlers.RenderHandler;
 import com.sammy.lodestone.systems.rendering.RenderPhases;
 import com.sammy.lodestone.systems.rendering.renderlayer.ShaderUniformHandler;
 import net.fabricmc.loader.api.FabricLoader;
+import net.minecraft.client.gl.ShaderProgram;
 import net.minecraft.client.render.RenderLayer;
 import net.minecraft.client.render.RenderPhase;
 import net.minecraft.client.render.VertexFormat;
@@ -118,7 +119,7 @@ public class LodestoneRenderLayerRegistry extends RenderPhase {
 
 	/**
 	 * Queues shader uniform changes for a render type. When we end batches in {@link RenderHandler}}, we do so one render type at a time.
-	 * Prior to ending a batch, we run {@link ShaderUniformHandler#updateShaderData(ShaderProgram)} (ShaderInstance)} if one is present for a given render type.
+	 * Prior to ending a batch, we run {@link ShaderUniformHandler#updateShaderData(net.minecraft.client.gl.ShaderProgram)} (ShaderProgram)} (ShaderInstance)} if one is present for a given render type.
 	 */
 	public static RenderLayer applyUniformChanges(RenderLayer type, ShaderUniformHandler handler) {
 		RenderHandler.UNIFORM_HANDLERS.put(type, handler);
